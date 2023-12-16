@@ -1,0 +1,26 @@
+:root{
+    --primary : #712cf8;
+    --link: #2D84F7;
+}
+
+.button{
+    background:var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+button{
+    border: none;
+    background: none;
+    color: var(--link);
+}
+
+.icon{
+    font-size: 25px;
+    color: var(--primary);
+}
+.icon:hover{
+    cursor: pointer;
+    opacity: 0.9;
+}

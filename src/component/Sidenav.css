@@ -1,0 +1,6 @@
+.side-nav{
+    height: calc(100vh - 50px); 
+    background: transparent;
+    background-color:var(--primary);
+    width: 150px;
+}
