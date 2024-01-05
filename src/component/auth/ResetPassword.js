@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { ArrowLeftCircleFill } from "react-bootstrap-icons";
 import { CustomToaster, Notify } from "../../shared/CustomToaster";
-import AlertBox from "../../shared/AlertBox";
+import CustomAlert from "../../shared/CustomAlert";
 import axios from "axios";
 import AuthLayout from "../../layout/AuthLayout";
 
@@ -53,7 +53,7 @@ export default function Reset() {
               <ArrowLeftCircleFill className="icon" onClick={() => navigate(-1)} />
               Reset Password
             </Card.Title>
-            <AlertBox variant="success" message={state.message} />
+            <CustomAlert variant="success" error={state.message} />
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3 form-group">
                 <Form.Label>Email</Form.Label>

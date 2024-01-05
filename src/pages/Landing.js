@@ -19,7 +19,7 @@ export default function Landing() {
       <div className="container">
         <Card>
           <CardBody>
-            <Card.Title className="align-center mb-4 title">Welcome to Ticketing System</Card.Title>
+            <Card.Title className="align-center mb-4 titlefd">TCRM SYSTEM</Card.Title>
             {activeForm === "login" && <Login setActiveForm={setActiveForm} />}
             {activeForm === "register" && <Register setActiveForm={setActiveForm} />}
           </CardBody>

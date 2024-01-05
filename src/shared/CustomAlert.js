@@ -1,8 +1,9 @@
 import React from "react";
 import "./CustomAlert.css";
-export default function CustomAlert({ error }) {
+export default function CustomAlert({ variant, error }) {
+  const classes = `custom-alert alert-${variant}`;
   return (
-    <div className="custom-alert">
+    <div className={classes}>
       <span>{error}</span>
     </div>
   );

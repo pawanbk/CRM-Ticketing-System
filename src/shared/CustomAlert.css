@@ -1,7 +1,15 @@
 .custom-alert{
-    background: var(--dangerBg);
-    border-left: 5px solid var(--danger);
     height: 4rem;
     margin-bottom: 1rem;
-    padding: 1rem 0 0 10px;
+    padding: 1rem 0 .5rem 10px;
+}
+
+.alert-danger{
+    background: var(--dangerBg);
+    border-left: 5px solid var(--danger);
+}
+
+.alert-success{
+    background:#ebf8ec;
+    border-left: 5px solid #42ad41;
 }

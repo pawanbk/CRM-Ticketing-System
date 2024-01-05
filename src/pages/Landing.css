@@ -12,3 +12,14 @@
     border-bottom: 1px solid #712cf8;
 }
 
+@media only screen and (max-width:600px){
+    .container{
+        height:100%;
+        width:100% !important;
+        margin:0 !important;
+        padding:0 !important;
+    }
+    .card{
+        margin:0;
+    }
+}
