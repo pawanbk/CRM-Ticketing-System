@@ -1,12 +1,14 @@
-import React from 'react';
-import Topnav from '../component/Topnav';
-import SideNav from '../component/SideNav';
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import AppLayout from "../layout/AppLayout";
+import { getFreshAccessToken } from "../api/tokenApi";
+import { userInfo } from "./UserActions";
 
 export default function Dashboard() {
-  return (
-    <div>
-      <Topnav />
-      <SideNav />
-    </div>
-  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getFreshAccessToken();
+    dispatch(userInfo());
+  }, [dispatch]);
+  return <AppLayout>Dashboard</AppLayout>;
 }

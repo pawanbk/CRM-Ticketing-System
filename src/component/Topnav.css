@@ -1,5 +1,23 @@
 .navbar{
-    display: flex;
-    justify-content: center !important;
-    height: 50px;
+    height: 60px;
+    background-color:var(--primary);
 }
+/* .menu-icon{
+    display:none;
+    font-size: 30px;
+    color: #fff
+} */
+.menu-icon:hover{
+    cursor: pointer;
+    color:var(--secondary);
+}
+
+
+@media only screen and (max-width: 600px) {
+    .menu-icon{
+        display: block;
+    }
+    /* a.nav-link{
+        display: none;
+    } */
+  }

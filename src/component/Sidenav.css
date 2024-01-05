@@ -1,6 +1,30 @@
 .side-nav{
-    height: calc(100vh - 50px); 
-    background: transparent;
-    background-color:var(--primary);
+    height: calc(100vh - 50px);
     width: 150px;
+    background: var(--secondary);
+    color: #fff;
+    padding: 10px 0 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding-top: 30px;
+}
+
+.nav-link{
+    text-transform: uppercase;
+}
+/* .nav-link:last-child{
+    border-top: 1px solid;
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+   
+} */
+
+@media only screen and (max-width: 600px) {
+    .side-nav{
+        display:none;   
+    }
 }
