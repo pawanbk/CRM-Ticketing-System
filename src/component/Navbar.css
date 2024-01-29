@@ -1,0 +1,13 @@
+.primary{
+    background:var(--primary)!important;
+}
+
+.icon{
+    font-size:30px;
+}
+.icon-btn{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    gap:10px;
+}

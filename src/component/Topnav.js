@@ -9,7 +9,7 @@ import Logo from "./Logo/Logo";
 import { LinkContainer } from "react-router-bootstrap";
 import { BoxArrowRight, List } from "react-bootstrap-icons";
 
-export default function Topnav() {
+export default function Topnav({ showSidenav }) {
   const navigate = useNavigate();
   const logout = async () => {
     try {
@@ -34,6 +34,7 @@ export default function Topnav() {
       console.log(error);
     }
   };
+
   return (
     <Navbar data-bs-theme="dark">
       <Container>
@@ -43,9 +44,9 @@ export default function Topnav() {
         <Nav>
           <Nav.Link onClick={logout}>Logout</Nav.Link>
         </Nav>
-        {/* <div className="menu-icon">
+        <div className="menu-icon" onClick={showSidenav}>
           <List></List>
-        </div> */}
+        </div>
       </Container>
     </Navbar>
   );

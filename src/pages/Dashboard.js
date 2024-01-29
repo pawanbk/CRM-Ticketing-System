@@ -3,12 +3,19 @@ import { useDispatch } from "react-redux";
 import AppLayout from "../layout/AppLayout";
 import { getFreshAccessToken } from "../api/tokenApi";
 import { userInfo } from "./UserActions";
+import Breadcrumb from "react-bootstrap/Breadcrumb";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
   useEffect(() => {
-    getFreshAccessToken();
+    // getFreshAccessToken();
     dispatch(userInfo());
   }, [dispatch]);
-  return <AppLayout>Dashboard</AppLayout>;
+  return (
+    <AppLayout>
+      <Breadcrumb>
+        <Breadcrumb.Item active>Dashboard</Breadcrumb.Item>
+      </Breadcrumb>
+    </AppLayout>
+  );
 }

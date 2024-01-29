@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./component/protected-route/PrivateRoute.js";
 import TicketList from "./pages/TicketList.js";
+import Profile from "./pages/Profile.js";
 function App() {
   return (
     <div className="App">
@@ -18,6 +19,9 @@ function App() {
           </Route>
           <Route path="/tickets" element={<PrivateRoute />}>
             <Route path="/tickets" element={<TicketList />} />
+          </Route>
+          <Route path="/profile" element={<PrivateRoute />}>
+            <Route path="/profile" element={<Profile />} />
           </Route>
           <Route path="/forget-password" element={<Forget />} />
           <Route path="/reset-password" element={<Reset />} />

@@ -1,0 +1,29 @@
+
+.breadcrumb-item a:first-child{
+    text-decoration: none;
+    font-weight: bolder;
+}
+
+.customBtn{
+    background: var(--primary) !important;
+    position:relative;
+    width:100px; 
+}
+
+.search-box{
+    width:40%;
+    height:35px;
+    margin-bottom:10px;
+    gap:10px;
+    float:right;
+}
+
+.btn:hover{
+    opacity:0.9;
+}
+
+@media only screen and (max-width: 600px){
+    .search-box{
+        width:100%;
+    }
+}
