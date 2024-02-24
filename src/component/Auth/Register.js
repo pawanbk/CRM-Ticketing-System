@@ -6,7 +6,7 @@ import { Col, Row } from "react-bootstrap";
 export default function Register({ setActiveForm }) {
   const [inputs, setInputs] = useState({
     firstName: "",
-    surName: "",
+    lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -26,8 +26,8 @@ export default function Register({ setActiveForm }) {
         </Col>
         <Col>
           <Form.Group className="mb-3 form-group">
-            <Form.Label>Surname</Form.Label>
-            <Form.Control required type="text" name="surName" onChange={handleChange} value={inputs.surName} placeholder="doe" />
+            <Form.Label>Last Name</Form.Label>
+            <Form.Control required type="text" name="lastName" onChange={handleChange} value={inputs.lastName} placeholder="doe" />
           </Form.Group>
         </Col>
       </Row>
