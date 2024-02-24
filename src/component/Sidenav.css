@@ -1,0 +1,41 @@
+
+.sidenav-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: 2;
+  transition: var(--transition);
+  visibility: hidden;
+}
+.sidenav {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  overflow: scroll;
+  padding: 1rem;
+  transform: translateX(100%);
+  transition: var(--transition);
+}
+
+.sidenav-close {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.show-sidenav {
+  transform: translateX(0);
+}
+.visibility {
+  visibility: visible;
+}
+
+@media only screen and (max-width: 600px) {
+  .side-nav{
+      display:none;   
+  }
+}

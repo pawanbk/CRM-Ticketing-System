@@ -1,14 +1,16 @@
 main{
+    width:100%;
+    padding:10px;
     display:flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:20px;
 }
 
-.content{
-    width: calc(100% - 150px);
-}
 
 @media only screen and (max-width: 600px) {
-    .content{
-        width:100%;
+    main{
+        display:inline-block;
     }
 }
