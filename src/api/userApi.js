@@ -33,3 +33,15 @@ export const getUserProfile = () => {
     }
   });
 };
+
+export const userRegistration = async (payloads) => {
+  if (!payloads.surName && !payloads.firstName && !payloads.email && !payloads.password && !payloads.confirmPassword) return Promise.reject("All fields are mandatory");
+  if (payloads.password !== payloads.confirmPassword) return Promise.reject("Password does not matches");
+  try {
+    const res = await axios.post(API_URL, payloads);
+    console.log(res);
+    if (res.status === 201 && res.data.success === true) return res.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};

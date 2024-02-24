@@ -53,7 +53,7 @@ export default function Reset() {
               <ArrowLeftCircleFill className="icon" onClick={() => navigate(-1)} />
               Reset Password
             </Card.Title>
-            <CustomAlert variant="success" error={state.message} />
+            <CustomAlert variant="success" message={state.message} />
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3 form-group">
                 <Form.Label>Email</Form.Label>

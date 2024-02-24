@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Col, Row } from "react-bootstrap";
+import { userRegistration } from "../../api/userApi";
+import CustomAlert from "../../shared/CustomAlert";
 
 export default function Register({ setActiveForm }) {
   const [inputs, setInputs] = useState({
@@ -11,12 +13,37 @@ export default function Register({ setActiveForm }) {
     password: "",
     confirmPassword: "",
   });
-
+  const [error, setErrors] = useState("");
+  const [success, setSuccess] = useState("");
   const handleChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
+
+  const register = async (e) => {
+    e.preventDefault();
+    setErrors("");
+    try {
+      const res = await userRegistration(inputs);
+      setSuccess(res?.message);
+      setInputs({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+    } catch (error) {
+      if (error?.response?.data && error.response.data.message) {
+        setErrors(error.response.data.message);
+      } else {
+        setErrors(error);
+      }
+    }
+  };
   return (
-    <Form>
+    <Form onSubmit={register}>
+      {error && <CustomAlert variant="danger" message={error} />}
+      {success && <CustomAlert variant="success" message={success} />}
       <Row>
         <Col>
           <Form.Group className="mb-3 form-group">
@@ -51,9 +78,7 @@ export default function Register({ setActiveForm }) {
       </Button>
       <div className="mt-3" style={{ float: "right" }}>
         Already have an account?
-        <button onClick={() => setActiveForm("login")} className="ml-1">
-          Login here
-        </button>
+        <button onClick={() => setActiveForm("login")}>Login here</button>
       </div>
     </Form>
   );

@@ -49,7 +49,7 @@ export default function Login({ setActiveForm }) {
   };
   return (
     <Form onSubmit={onSubmit}>
-      {error && <CustomAlert variant="danger" error={error} />}
+      {error && <CustomAlert variant="danger" message={error} />}
       <Form.Group className="mb-3 form-group">
         <Form.Label>Username</Form.Label>
         <Form.Control required type="email" name="email" placeholder="doe@gmail.com" value={inputs.email} onChange={handleChange} />

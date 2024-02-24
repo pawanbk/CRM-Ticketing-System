@@ -19,10 +19,10 @@ export default function Forget() {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
-  const submitForm = async (e) => {
+  const submitForm = (e) => {
     setLoading(true);
     e.preventDefault();
-    await axios
+    axios
       .post(API_URL, inputs)
       .then((result) => {
         if (result.status === 200) {
