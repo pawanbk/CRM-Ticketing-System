@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Col, Row } from "react-bootstrap";
-import { userRegistration } from "../../api/userApi";
+import AuthService from "../../api/AuthService";
 import CustomAlert from "../../shared/CustomAlert";
 
 export default function Register({ setActiveForm }) {
@@ -23,7 +23,7 @@ export default function Register({ setActiveForm }) {
     e.preventDefault();
     setErrors("");
     try {
-      const res = await userRegistration(inputs);
+      const res = await AuthService.register(inputs);
       setSuccess(res?.message);
       setInputs({
         firstName: "",

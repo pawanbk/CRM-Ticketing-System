@@ -1,11 +1,10 @@
 import { userLoading, userLoadingSuccess, userLoadingFail } from "./UserSlice";
-import { getUserProfile } from "../api/userApi";
+import UserService from "../api/UserService";
 
 export const userInfo = () => async (dispatch) => {
   try {
     dispatch(userLoading());
-    //api call
-    const res = await getUserProfile();
+    const res = await UserService.getProfile();
     if (res.data.success === true) dispatch(userLoadingSuccess(res.data.user));
   } catch (error) {
     dispatch(userLoadingFail(error.message));

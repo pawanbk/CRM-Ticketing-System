@@ -6,7 +6,7 @@ import { EyeFill, EyeSlashFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loginFail, loginLoading, loginSuccess } from "./LoginSlice";
-import { userLogin } from "../../../api/userApi";
+import AuthService from "../../../api/AuthService";
 import { userInfo } from "../../../pages/UserActions";
 import CustomAlert from "../../../shared/CustomAlert";
 
@@ -32,7 +32,7 @@ export default function Login({ setActiveForm }) {
     e.preventDefault();
     dispatch(loginLoading());
     try {
-      const res = await userLogin(inputs);
+      const res = await AuthService.login(inputs);
       if (res?.status === "success") {
         dispatch(loginSuccess());
         dispatch(userInfo());
