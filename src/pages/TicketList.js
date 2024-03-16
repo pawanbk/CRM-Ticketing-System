@@ -8,25 +8,24 @@ import Search from "../component/Search";
 import { Button } from "react-bootstrap";
 import AddTicket from "../component/AddTicket";
 import { axiosInstance } from "../config/axios";
+import TicketService from "../api/TicketServices";
 
 export default function TicketList() {
   const [modalShow, setModalShow] = useState(false);
   const [tickets, setTickets] = useState([]);
   const [filteredTickets, setFilteredTickets] = useState([]);
 
-  useEffect(() => {
+  const fetchTickets = async () => {
     try {
-      axiosInstance
-        .get("ticket/all")
-        .then((res) => {
-          if (res.data.success === true) setTickets(res.data.tickets);
-        })
-        .catch((error) => {
-          return Promise.reject(error);
-        });
+      const tickets = await TicketService.getAll();
+      console.log(tickets);
+      // setTickets(res.data.tickets);
     } catch (error) {
-      return Promise.reject(error.message);
+      console.log(error);
     }
+  };
+  useEffect(() => {
+    fetchTickets();
   }, []);
 
   const search = async (e) => {
