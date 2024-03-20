@@ -6,8 +6,7 @@ import "./Topnav.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Logo from "./Logo/Logo";
-import { LinkContainer } from "react-router-bootstrap";
-import { BoxArrowRight, List } from "react-bootstrap-icons";
+import { List } from "react-bootstrap-icons";
 
 export default function Topnav({ showSidenav }) {
   const navigate = useNavigate();

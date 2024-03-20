@@ -4,10 +4,10 @@ import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { LinkContainer } from "react-router-bootstrap";
 import TicketItem from "../component/TicketItem";
 import "./TicketList.css";
-import Search from "../component/Search";
+import Search from "../component/search/Search";
 import { Button } from "react-bootstrap";
 import AddTicket from "../component/AddTicket";
-import { axiosInstance } from "../config/axios";
+import axiosInstance from "../config/axios";
 import TicketService from "../api/TicketServices";
 
 export default function TicketList() {
@@ -18,8 +18,7 @@ export default function TicketList() {
   const fetchTickets = async () => {
     try {
       const tickets = await TicketService.getAll();
-      console.log(tickets);
-      // setTickets(res.data.tickets);
+      setTickets(tickets.data.tickets);
     } catch (error) {
       console.log(error);
     }

@@ -1,4 +1,4 @@
-import { axiosInstance } from "../config/axios";
+import axiosInstance from "../config/axios";
 
 const TicketService = {
   getAll: async () => {
