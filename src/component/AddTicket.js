@@ -2,7 +2,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
-import { axiosInstance } from "../config/axios";
+import axiosInstance from "../config/axios";
 import { CustomToaster, Notify } from "../shared/CustomToaster";
 
 export default function AddTicket(props) {
