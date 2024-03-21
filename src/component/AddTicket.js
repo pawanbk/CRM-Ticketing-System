@@ -2,7 +2,8 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
-import TicketService from "../api/TicketServices";
+import axiosInstance from "../config/axios";
+import { CustomToaster, Notify } from "../shared/CustomToaster";
 
 export default function AddTicket(props) {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,17 +19,15 @@ export default function AddTicket(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await TicketService.createTicket(inputs);
-      if (response && response.success === true) {
-        setIsLoading(false);
-        setInputs({
-          title: "",
-          description: "",
-        });
-        await props.loadTickets();
-        props.hideModal();
-        props.toaster(response.message, "success");
-      }
+      await axiosInstance.post("/ticket", inputs).then((response) => {
+        setIsLoading(true);
+        setTimeout(() => {
+          if (response.data.success === true) {
+            setIsLoading(false);
+            Notify(response.data.message, "success");
+          }
+        }, 2000);
+      });
     } catch (error) {
       Promise.reject(error.message);
     }
@@ -54,6 +53,7 @@ export default function AddTicket(props) {
           </Button>
         </Form>
       </Modal.Body>
+      <CustomToaster />
     </Modal>
   );
 }
