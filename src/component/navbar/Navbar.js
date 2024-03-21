@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -8,28 +7,13 @@ import "./Navbar.css";
 import { BoxArrowLeft } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
+import UserService from "../../api/UserService";
 
 export default function CustomNavbar() {
   const navigate = useNavigate();
   const logout = async () => {
     try {
-      await axios
-        .delete("http://localhost:3001/v1/user/logout", {
-          headers: {
-            Authorization: sessionStorage.getItem("accessToken"),
-          },
-        })
-        .then((result) => {
-          console.log(result);
-          if (result.data.success === true) {
-            localStorage.removeItem("refreshToken");
-            sessionStorage.removeItem("accessToken");
-            navigate("/");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (await UserService.logout()) navigate("/");
     } catch (error) {
       console.log(error);
     }
