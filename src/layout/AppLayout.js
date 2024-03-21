@@ -1,5 +1,5 @@
 import React from "react";
-import CustomNav from "../component/navbar/Navbar";
+import CustomNav from "../component/Navbar";
 
 import "./AppLayout.css";
 
