@@ -7,6 +7,9 @@ const refreshToken = AuthService.getRefreshToken();
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3001/v1/",
+  headers: {
+    Authorization: accessToken,
+  },
 });
 
 axiosInstance.interceptors.request.use(
@@ -51,7 +54,7 @@ axiosInstance.interceptors.response.use(
           // return Navigate({ to: "/login" });
         }
       } else {
-        console.error("refere=sh token expired");
+        console.error("refere token expired");
         // return Navigate({ to: "/login" });
       }
     }
