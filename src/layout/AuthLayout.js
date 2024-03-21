@@ -8,6 +8,6 @@ export default function AuthLayout({ children }) {
     if (sessionStorage.getItem("accessToken") && sessionStorage.getItem("accessToken") != null) {
       navigate("/dashboard");
     }
-  }, [navigate]);
+  });
   return <div className="bg">{children}</div>;
 }

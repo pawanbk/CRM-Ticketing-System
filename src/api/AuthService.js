@@ -29,7 +29,7 @@ const AuthService = {
     }
   },
   getAccessToken: () => sessionStorage.getItem("accessToken"),
-  getRefreshToken: () => localStorage.getItem("refreshToken"),
+  getRefreshToken: () => localStorage.getItem("accessToken"),
 };
 
 export default AuthService;
