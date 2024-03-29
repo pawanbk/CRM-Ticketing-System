@@ -28,11 +28,11 @@ export default function Profile() {
         <Card.Body>
           <Form.Group className="mb-3 form-group">
             <Form.Label>Email</Form.Label>
-            <Form.Control value={userData.email} disabled />
+            <Form.Control defaultValue={userData.email} disabled />
           </Form.Group>
           <Form.Group className="mb-3 form-group">
             <Form.Label>Full name</Form.Label>
-            <Form.Control required type="text" name="fullName" placeholder="doe@gmail.com" value={capitaliseFirstLetter(userData.fullName)} />
+            <Form.Control required type="text" name="fullName" defaultValue={capitaliseFirstLetter(userData.fullName)} />
           </Form.Group>
         </Card.Body>
       </Card>

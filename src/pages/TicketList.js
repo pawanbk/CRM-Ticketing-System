@@ -73,7 +73,7 @@ export default function TicketList() {
           </tbody>
         </table>
       </div>
-      <AddTicket show={modalShow} hideModal={() => setModalShow(false)} loadTickets={() => fetchTickets()} toaster={notification} />
+      <AddTicket show={modalShow} onHide={() => setModalShow(false)} loadTickets={() => fetchTickets()} toaster={notification} />
       <CustomToaster />
     </AppLayout>
   );

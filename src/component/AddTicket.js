@@ -26,7 +26,7 @@ export default function AddTicket(props) {
           description: "",
         });
         await props.loadTickets();
-        props.hideModal();
+        props.onHide();
         props.toaster(response.message, "success");
       }
     } catch (error) {
@@ -35,12 +35,12 @@ export default function AddTicket(props) {
   };
 
   return (
-    <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" top>
+    <Modal show={props.show} onHide={props.onHide} aria-labelledby="contained-modal-title-vcenter">
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">Add New Ticket</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
+        <Modal.Body>
           <Form.Group className="mb-3 form-group">
             <Form.Label>Title</Form.Label>
             <Form.Control required type="text" name="title" onChange={handleChange} />
@@ -49,11 +49,13 @@ export default function AddTicket(props) {
             <Form.Label>Description</Form.Label>
             <Form.Control required type="text" name="description" onChange={handleChange} />
           </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
           <Button type="submit" className="customBtn" disabled={isLoading && "disabled"}>
             {isLoading ? "Adding..." : "ADD"}
           </Button>
-        </Form>
-      </Modal.Body>
+        </Modal.Footer>
+      </Form>
     </Modal>
   );
 }
