@@ -1,6 +1,5 @@
 import axios from "axios";
 import AuthService from "../api/AuthService";
-import { Navigate } from "react-router-dom";
 
 const accessToken = AuthService.getAccessToken();
 const refreshToken = AuthService.getRefreshToken();
@@ -32,9 +31,7 @@ axiosInstance.interceptors.response.use(
   async function (error) {
     const originalRequest = error.config;
 
-    // Check if the error is due to an expired access token
     if (error.response.data.status === 403 && error.response.data.message === "Access Forbidden") {
-      // Send a request to refresh the access token
       if (refreshToken) {
         try {
           const url = "http://localhost:3001/v1/token";
@@ -46,7 +43,6 @@ axiosInstance.interceptors.response.use(
           const newAccessToken = await response.data.accessToken;
           sessionStorage.setItem("accessToken", newAccessToken);
 
-          // Retry the original request with the new access token
           originalRequest.headers.Authorization = newAccessToken;
           return axios(originalRequest);
         } catch (refreshError) {
@@ -59,14 +55,8 @@ axiosInstance.interceptors.response.use(
       }
     }
 
-    // For other errors, reject the promise
     return Promise.reject(error);
   }
 );
-
-const removeTokens = () => {
-  localStorage.removeItem("refreshToken");
-  sessionStorage.removeItem("accessToken");
-};
 
 export default axiosInstance;

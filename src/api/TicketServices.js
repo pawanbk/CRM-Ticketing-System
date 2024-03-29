@@ -1,9 +1,9 @@
 import axiosInstance from "../config/axios";
 
 const TicketService = {
-  getAll: async () => {
+  getAll: async (filters) => {
     try {
-      const res = await axiosInstance.get("ticket/all");
+      const res = await axiosInstance.get("ticket/all", { params: filters });
       if (res && res.status === 200 && res.data.success === true) return res.data;
     } catch (error) {
       return error;

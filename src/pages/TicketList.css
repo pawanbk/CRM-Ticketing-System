@@ -22,8 +22,8 @@
 
 .topbar{
     width:100%;
-    height:35px;
-    margin-bottom:10px;
+    /* height:35px; */
+    margin-bottom:20px;
 }
 
 .form-control{
@@ -32,6 +32,8 @@
 .btn:hover{
     opacity:0.9;
 }
+
+
 
 @media only screen and (max-width: 600px){
     .topbar{
