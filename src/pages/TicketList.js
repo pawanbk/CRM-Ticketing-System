@@ -7,25 +7,32 @@ import "./TicketList.css";
 import Search from "../component/search/Search";
 import { Button } from "react-bootstrap";
 import AddTicket from "../component/AddTicket";
-import axiosInstance from "../config/axios";
 import TicketService from "../api/TicketServices";
 import { PlusCircle } from "react-bootstrap-icons";
 import { CustomToaster, Notify } from "../shared/CustomToaster";
+import { FormSelect, Form } from "react-bootstrap";
 
 export default function TicketList() {
   const [modalShow, setModalShow] = useState(false);
   const [tickets, setTickets] = useState([]);
-  const [filteredTickets, setFilteredTickets] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState({
+    status: "all",
+    title: "",
+  });
+
   const columns = ["Title", "Status", "Description", "Created At"];
 
   const fetchTickets = async () => {
     try {
-      const data = await TicketService.getAll();
-      const tickets = await data.tickets;
-      setTickets(tickets);
+      const data = await TicketService.getAll(selectedFilter);
+      setTickets(data.tickets);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const addFilters = async (e) => {
+    setSelectedFilter({ ...selectedFilter, [e.target.name]: e.target.value });
   };
 
   const notification = (message, status) => {
@@ -33,14 +40,8 @@ export default function TicketList() {
   };
   useEffect(() => {
     fetchTickets();
-  }, []);
+  }, [selectedFilter]);
 
-  const search = async (e) => {
-    const query = e.target.value;
-    await axiosInstance.get(`ticket/search/${query}`).then((res) => {
-      if (res.data?.success === true) setFilteredTickets(res.data.filtered);
-    });
-  };
   return (
     <AppLayout>
       <Breadcrumb>
@@ -51,12 +52,24 @@ export default function TicketList() {
         <Breadcrumb.Item active>List</Breadcrumb.Item>
       </Breadcrumb>
       <div className="content">
-        <div className="topbar d-flex justify-content-around">
-          <Search keyup={search} />
-          <Button className="customBtn" onClick={() => setModalShow(true)}>
-            ADD
-            <PlusCircle />
-          </Button>
+        <div className="topbar d-flex flex-column mb-3 gap-2">
+          <div className="d-flex justify-content-between">
+            <Form.Control placeholder="Search.." onChange={addFilters} name="title" value={selectedFilter?.title} />
+            <Button className="customBtn" onClick={() => setModalShow(true)}>
+              ADD
+              <PlusCircle />
+            </Button>
+          </div>
+          <div className="d-flex flex-column gap-2">
+            <div className="filters">Filter by</div>
+            <Form.Label>Status</Form.Label>
+            <FormSelect style={{ width: "20%" }} name="status" value={selectedFilter.status} onChange={addFilters}>
+              <option value="all">All</option>
+              <option value="unassigned">Unassigned</option>
+              <option value="awaiting-feedback">Awaiting Feedback</option>
+              <option value="complete">Complete</option>
+            </FormSelect>
+          </div>
         </div>
         <table className="table table-bordered">
           <thead>
@@ -68,13 +81,13 @@ export default function TicketList() {
           </thead>
           <tbody>
             {tickets?.map((ticket) => (
-              <TicketItem key={ticket._id} ticket={ticket} />
+              <TicketItem key={ticket._id} ticket={ticket} loadTickets={() => fetchTickets()} toaster={notification} />
             ))}
           </tbody>
         </table>
+        <AddTicket show={modalShow} onHide={() => setModalShow(false)} loadTickets={() => fetchTickets()} toaster={notification} />
+        <CustomToaster />
       </div>
-      <AddTicket show={modalShow} onHide={() => setModalShow(false)} loadTickets={() => fetchTickets()} toaster={notification} />
-      <CustomToaster />
     </AppLayout>
   );
 }
