@@ -19,6 +19,25 @@ const TicketService = {
       return error;
     }
   },
+
+  getTicket: async (id) => {
+    if (!id) return Promise.reject("no id provided");
+    try {
+      const res = await axiosInstance.get("/ticket/edit/" + id);
+      if (res && res.status === 200 && res.data.success === true) return res.data;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  updateTicket: async (inputs) => {
+    try {
+      const res = await axiosInstance.post("/ticket/update", inputs);
+      if (res && res.status === 200 && res.data.success === true) return res.data;
+    } catch (error) {
+      return error;
+    }
+  },
 };
 
 export default TicketService;

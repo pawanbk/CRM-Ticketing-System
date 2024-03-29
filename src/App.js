@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./component/protected-route/PrivateRoute.js";
 import TicketList from "./pages/TicketList.js";
 import Profile from "./pages/Profile.js";
+import TicketDetail from "./pages/ticket/id.js";
 function App() {
   return (
     <div className="App">
@@ -19,6 +20,9 @@ function App() {
           </Route>
           <Route path="/tickets" element={<PrivateRoute />}>
             <Route path="/tickets" element={<TicketList />} />
+          </Route>
+          <Route path="/tickets/edit/:id" element={<PrivateRoute />}>
+            <Route path="/tickets/edit/:id" element={<TicketDetail />} />
           </Route>
           <Route path="/profile" element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
