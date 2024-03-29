@@ -50,8 +50,10 @@ export default function TicketDetail(props) {
         <LinkContainer to="/dashboard">
           <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
         </LinkContainer>
-        <Breadcrumb.Item active>Tickets</Breadcrumb.Item>
-        <Breadcrumb.Item active>List</Breadcrumb.Item>
+        <LinkContainer to="/tickets">
+          <Breadcrumb.Item>Tickets</Breadcrumb.Item>
+        </LinkContainer>
+        <Breadcrumb.Item active>{inputs.title}</Breadcrumb.Item>
       </Breadcrumb>
       <div className="card-content">
         <div className="card">
