@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { dateFormat } from "../utils/Auth";
 import { useEffect, useState, useCallback } from "react";
 import { Form } from "react-bootstrap";
+import { truncate } from "lodash";
+
 import TicketService from "../api/TicketServices";
 
 export default function TicketItem({ ticket, loadTickets, toaster }) {
@@ -10,7 +12,7 @@ export default function TicketItem({ ticket, loadTickets, toaster }) {
   const handleChange = async (e) => {
     const { value } = e.target;
     try {
-      const res = await TicketService.updateTicket({ _id: ticket._id, status: value });
+      const res = await TicketService.update({ _id: ticket._id, status: value });
       if (res.success) {
         loadTickets();
         setBackground(value);
@@ -48,7 +50,7 @@ export default function TicketItem({ ticket, loadTickets, toaster }) {
           <option value="complete">Complete</option>
         </Form.Select>
       </td>
-      <td>{ticket.description}</td>
+      <td>{truncate(ticket.description)}</td>
       <td>{dateFormat(ticket.createdAt)}</td>
       <td>
         <Link to={"edit/" + ticket._id}>EDIT</Link>

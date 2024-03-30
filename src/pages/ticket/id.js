@@ -19,7 +19,7 @@ export default function TicketDetail(props) {
   });
   const fetchTicket = async () => {
     try {
-      const result = await TicketService.getTicket(id);
+      const result = await TicketService.get(id);
       if (result.success === true && result.ticket) {
         setInputs(result.ticket);
       }
@@ -29,7 +29,7 @@ export default function TicketDetail(props) {
   const updateTicket = async (e) => {
     e.preventDefault();
     try {
-      const res = await TicketService.updateTicket(inputs);
+      const res = await TicketService.update(inputs);
       if (res.success === true) {
         await Notify(res.message, "success");
         fetchTicket();

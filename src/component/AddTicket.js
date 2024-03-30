@@ -18,7 +18,7 @@ export default function AddTicket(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await TicketService.createTicket(inputs);
+      const response = await TicketService.create(inputs);
       if (response && response.success === true) {
         setIsLoading(false);
         setInputs({
@@ -47,7 +47,7 @@ export default function AddTicket(props) {
           </Form.Group>
           <Form.Group className="mb-3 form-group">
             <Form.Label>Description</Form.Label>
-            <Form.Control required type="text" name="description" onChange={handleChange} />
+            <Form.Control as="textarea" type="text" name="description" onChange={handleChange} />
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
