@@ -10,7 +10,7 @@ const TicketService = {
     }
   },
 
-  createTicket: async (inputs) => {
+  create: async (inputs) => {
     if (!inputs) return Promise.reject("error");
     try {
       const res = await axiosInstance.post("/ticket", inputs);
@@ -20,7 +20,7 @@ const TicketService = {
     }
   },
 
-  getTicket: async (id) => {
+  get: async (id) => {
     if (!id) return Promise.reject("no id provided");
     try {
       const res = await axiosInstance.get("/ticket/edit/" + id);
@@ -30,7 +30,16 @@ const TicketService = {
     }
   },
 
-  updateTicket: async (inputs) => {
+  getRecentlyUpdated: async () => {
+    try {
+      const res = await axiosInstance.get("/ticket/recently/updated");
+      if (res && res.data.success === true) return res.data;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  update: async (inputs) => {
     try {
       const res = await axiosInstance.post("/ticket/update", inputs);
       if (res && res.status === 200 && res.data.success === true) return res.data;

@@ -1,7 +1,7 @@
 import "./App.css";
 import Forget from "./component/auth/Forget.js";
 import Reset from "./component/auth/ResetPassword.js";
-import Dashboard from "./pages/Dashboard.js";
+import Dashboard from "./pages/dashboard/Dashboard.js";
 import Landing from "./pages/Landing.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,6 +9,7 @@ import PrivateRoute from "./component/protected-route/PrivateRoute.js";
 import TicketList from "./pages/TicketList.js";
 import Profile from "./pages/Profile.js";
 import TicketDetail from "./pages/ticket/id.js";
+
 function App() {
   return (
     <div className="App">

@@ -1,0 +1,14 @@
+.grid{
+    display:grid;
+    grid-template-columns: auto auto;
+    gap:1rem;
+}
+
+.card-body a{
+    text-decoration: none;
+    color: var(--link);
+}
+
+.card .card-header{
+    background-color: #fff;
+}
