@@ -51,12 +51,12 @@ export default function Dashboard() {
   }, []);
   return (
     <AppLayout>
-      <Breadcrumb>
-        <Breadcrumb.Item active>Dashboard</Breadcrumb.Item>
-      </Breadcrumb>
-      <>
+      <div className="d-flex justify-center align-items-center flex-column">
+        <Breadcrumb>
+          <Breadcrumb.Item active>Dashboard</Breadcrumb.Item>
+        </Breadcrumb>
         <div className="row">
-          <div className="col-6">
+          <div className="col-lg-6 col-sm-12">
             <div className="card">
               <div className="card-header">Stats</div>
               <div className="card-body grid">
@@ -67,7 +67,7 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-          <div className="col-6">
+          <div className="col-lg-6 mt-2">
             <div className="card">
               <div className="card-header">Quick Links</div>
               <div className="card-body">
@@ -84,7 +84,7 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="row">
-          <div className="col-6">
+          <div className="col-lg-6 mt-2">
             <div className="card">
               <div className="card-header">Recently Created Tickets</div>
               <div className="card-body">
@@ -100,7 +100,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="col-6">
+          <div className="col-lg-6 mt-2">
             <div className="card ">
               <div className="card-header">Recently Updated Tickets</div>
               <div className="card-body">
@@ -116,7 +116,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-      </>
+      </div>
     </AppLayout>
   );
 }

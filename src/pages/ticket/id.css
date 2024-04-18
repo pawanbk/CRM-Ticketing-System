@@ -1,5 +1,31 @@
-.card-content{
+.edit-form{
     display: flex;
     justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: calc(100% - 410px);
+    bottom:0;
+    top:100px;
+    z-index:999;
 }
 
+.comment-box{
+    position: absolute;
+    right:0;
+    top:55px;
+    bottom:0;
+    padding: 30px 20px;
+    width:400px;
+    overflow-y: scroll;
+}
+
+.comment-item{
+    height:auto;
+    padding: 10px;
+    background: #fff;
+}
+
+.btn-small{
+    font-size:13px;
+    font-weight: 700;
+}

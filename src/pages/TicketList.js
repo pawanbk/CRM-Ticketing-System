@@ -44,7 +44,7 @@ export default function TicketList() {
 
   return (
     <AppLayout>
-      <Breadcrumb>
+      <Breadcrumb className="d-flex justify-center">
         <LinkContainer to="/dashboard">
           <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
         </LinkContainer>
