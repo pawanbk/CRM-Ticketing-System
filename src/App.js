@@ -9,8 +9,6 @@ import PrivateRoute from "./component/protected-route/PrivateRoute.js";
 import TicketList from "./pages/TicketList.js";
 import Profile from "./pages/Profile.js";
 import TicketDetail from "./pages/ticket/id.jsx";
-import moment from "moment";
-import Moment from "react-moment";
 
 function App() {
   return (

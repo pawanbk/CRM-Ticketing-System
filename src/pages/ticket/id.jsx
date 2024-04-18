@@ -21,7 +21,7 @@ export default function TicketDetail(props) {
     description: "",
     comments:[]
   });
-  const [comments, setComments]= useState([]);
+  
   const [commentInput, setCommentInput] = useState("");
 
   const addComment = async() =>{
@@ -34,6 +34,7 @@ export default function TicketDetail(props) {
 
     }
     setCommentInput('')
+    fetchTicket();
   }
 
   const fetchTicket = async () => {
@@ -42,7 +43,9 @@ export default function TicketDetail(props) {
       if (result.success === true && result.ticket) {
         setTicket(result.ticket);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const updateTicket = async (e) => {
@@ -106,9 +109,9 @@ export default function TicketDetail(props) {
       </div>
       <div className="comment-box d-flex flex-column gap-2 border-start rounded">
         <CommentInput commentInput={commentInput} change ={(e)=> setCommentInput(e.target.value)} addComment={addComment}/>
-        {ticket.comments && ticket.comments.map((comment) =>
+        {ticket.comments && ticket.comments.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt)).map((comment) =>
         <div className="rounded comment-item">
-            <CommentItem comment={comment} setComments={setComments}/>
+            <CommentItem comment={comment} />
         </div>
         )}
         
