@@ -1,4 +1,5 @@
 import axiosInstance from "../config/axios";
+import { useAuthStore } from "../store";
 
 const UserService = {
   getProfile: () => {
@@ -12,12 +13,12 @@ const UserService = {
     });
   },
   logout: () => {
+    const { logout } = useAuthStore.getState();
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axiosInstance.delete("/user/logout");
         if (res && res.data?.success === true && res.data.message === "Logged out Successfully") {
-          localStorage.removeItem("refreshToken");
-          sessionStorage.removeItem("accessToken");
+          logout();
           resolve(true);
         }
       } catch (error) {

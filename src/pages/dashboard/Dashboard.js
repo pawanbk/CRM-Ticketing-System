@@ -91,7 +91,7 @@ export default function Dashboard() {
                 <ListGroup style={{ width: "100%" }}>
                   {recentlyCreated &&
                     recentlyCreated.map((ticket) => (
-                      <ListGroup.Item>
+                      <ListGroup.Item key={ticket._id}>
                         <Link to={"/tickets/edit/" + ticket._id}>{ticket.title}</Link>
                       </ListGroup.Item>
                     ))}
@@ -107,7 +107,7 @@ export default function Dashboard() {
                 <ListGroup style={{ width: "100%" }}>
                   {recentlyUpdated &&
                     recentlyUpdated.map((ticket) => (
-                      <ListGroup.Item>
+                      <ListGroup.Item key={ticket._id}>
                         <Link to={"/tickets/edit/" + ticket._id}>{ticket.title}</Link>
                       </ListGroup.Item>
                     ))}

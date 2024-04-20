@@ -13,7 +13,9 @@ export default function CustomNavbar() {
   const navigate = useNavigate();
   const logout = async () => {
     try {
-      if (await UserService.logout()) navigate("/");
+      if (await UserService.logout()) {
+        navigate("/");
+      }
     } catch (error) {
       console.log(error);
     }
