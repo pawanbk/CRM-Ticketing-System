@@ -21,7 +21,7 @@ export default function TicketDetail(props) {
     description: "",
     comments:[]
   });
-  
+
   const [commentInput, setCommentInput] = useState("");
 
   const addComment = async() =>{
@@ -34,7 +34,6 @@ export default function TicketDetail(props) {
 
     }
     setCommentInput('')
-    fetchTicket();
   }
 
   const fetchTicket = async () => {

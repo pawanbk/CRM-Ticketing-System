@@ -55,6 +55,14 @@ const TicketService = {
       return error;
     }
   },
+
+  reply: async (ticketId, commentId, reply) => {
+    try {
+      return await axiosInstance.post("/ticket/comment/reply", { ticketId, commentId, reply });
+    } catch (error) {
+      return error;
+    }
+  },
 };
 
 export default TicketService;

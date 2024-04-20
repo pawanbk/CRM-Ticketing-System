@@ -11,7 +11,8 @@ const CommentInput = (props) => {
             value={props.commentInput} 
             onChange={props.change}></Form.Control>
             <div className="float-right  my-1">
-                {props.cancelBtn && <button className="btn btn-sm btn-secondary" onClick={props.hideCommentInput}>Cancel</button>}
+                {props.cancelBtn && 
+                <button className="btn btn-sm btn-secondary" onClick={props.hideCommentInput}>Cancel</button>}
             
                 <button className="btn btn-sm btn-primary mx-1" onClick={props.addComment}>Comment</button>
             </div>

@@ -2,11 +2,13 @@ import { useState } from "react"
 import CommentInput from "./CommentInput"
 import { useParams } from "react-router-dom";
 import moment from "moment";
+import TicketService from "../../api/TicketServices";
 
 const CommentItem = ({comment,setComments}) => {
     const { id } = useParams();
     const secondsInDay = 24*60*60;
     const timeDifference = Math.abs(new Date() - new Date(comment.createdAt)) / 1000;
+
     const [isReplying, setIsReplying] = useState(false);
     const [showChildNodes, setShowChildNodes] = useState(false);
 
@@ -15,7 +17,9 @@ const CommentItem = ({comment,setComments}) => {
     const [replyInput, setReplyInput] = useState("");
   
     const addReplies = ()=>{
-        setReplies((prev)=>[{id:'', comment:replyInput, comments:[]}, ...prev])
+        // console.log(replyInput)
+        // setReplies((prev)=>[{id:'', message:replyInput, comments:[]}, ...prev])
+        TicketService.reply(id, comment._id, replyInput )
         setReplyInput('')
         setIsReplying(false)
     }
@@ -40,7 +44,12 @@ const CommentItem = ({comment,setComments}) => {
             </div>
         )}
         {isReplying && 
-            <CommentInput commentInput={replyInput} change = {(e) => setReplyInput(e.target.value)} addComment={addReplies} cancelBtn={true} hideCommentInput={() => setIsReplying(false)}/>
+            <CommentInput 
+                commentInput={replyInput} 
+                change = {(e) => setReplyInput(e.target.value)} 
+                addComment={addReplies} 
+                cancelBtn={true} 
+                hideCommentInput={() => setIsReplying(false)}/>
         }
     </div>
     )
