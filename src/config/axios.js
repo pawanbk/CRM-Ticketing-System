@@ -1,18 +1,17 @@
 import axios from "axios";
 import AuthService from "../api/AuthService";
-
-const accessToken = AuthService.getAccessToken();
-const refreshToken = AuthService.getRefreshToken();
+import { Navigate } from "react-router-dom";
+import { loginFail } from "../component/auth/login/LoginSlice";
+import store from "../store";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3001/v1/",
-  headers: {
-    Authorization: accessToken,
-  },
 });
 
 axiosInstance.interceptors.request.use(
   function (config) {
+    const accessToken = AuthService.getAccessToken("accessToken");
+
     if (accessToken) {
       config.headers.Authorization = accessToken;
     }
@@ -32,7 +31,9 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config;
 
     if (error.response.data.status === 403 && error.response.data.message === "Access Forbidden") {
-      if (refreshToken) {
+      const refreshToken = AuthService.getRefreshToken("refreshToken");
+      console.log("Refresh token", refreshToken);
+      if (refreshToken && refreshToken.length > 0) {
         try {
           const url = "http://localhost:3001/v1/token";
           const response = await axios.get(url, {
@@ -46,12 +47,14 @@ axiosInstance.interceptors.response.use(
           originalRequest.headers.Authorization = newAccessToken;
           return axios(originalRequest);
         } catch (refreshError) {
-          console.error("No Refresh token", refreshError);
-          // return Navigate({ to: "/login" });
+          console.error("Refresh token expired");
+          localStorage.removeItem("refreshToken");
+          return Navigate({ to: "/login" });
         }
       } else {
-        console.error("refere token expired");
-        // return Navigate({ to: "/login" });
+        console.error("No refresh token provided");
+        store.dispatch(loginFail("No refresh token provided"));
+        return Navigate({ to: "/login" });
       }
     }
 
