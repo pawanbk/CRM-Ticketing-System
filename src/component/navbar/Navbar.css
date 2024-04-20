@@ -1,8 +1,10 @@
 .primary{
+    color:#fff !important;
     background:var(--primary)!important;
 }
 
 .icon{
+    
     font-size:30px;
 }
 .icon-btn{
@@ -10,4 +12,25 @@
     flex-direction: row;
     align-items: center;
     gap:10px;
+}
+
+
+.hidden{
+    display: hidden;
+}
+
+
+
+@media only screen and (max-width:600px) {
+    .hidden{
+        display: block;
+    }
+    nav{
+        width:100% !important;
+    }
+
+    main{
+        display:flex;
+        flex-direction:column !important;
+    }
 }

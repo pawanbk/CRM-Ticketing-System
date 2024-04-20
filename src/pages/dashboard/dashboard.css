@@ -12,3 +12,14 @@
 .card .card-header{
     background-color: #fff;
 }
+
+@media only screen and (max-width:600px){
+    .grid{
+        grid-template-columns: auto;
+    }
+
+    .card{
+        margin:0 auto;
+        width:100%;
+    }
+}

@@ -1,13 +1,15 @@
 :root{
-    --primary : #712cf8;
+    /* --primary : #712cf8; */
+    --primary : #111245;
     --link: #2D84F7;
-    --secondary: #1D0F39;
+    --secondary: #c4bed0;
     --danger: #ff5402;
     --dangerBg: #fff8f4;
     --success:#18864b;
 }
 body{
     font-size:15px;
+    background:#edeef7 !important;
 }
 
 .button{
