@@ -7,6 +7,10 @@
     --dangerBg: #fff8f4;
     --success:#18864b;
 }
+
+td>a{
+    text-decoration: none;
+}
 body{
     font-size:15px;
     background:#edeef7 !important;
@@ -45,16 +49,14 @@ button{
     flex-direction: row;
 }
 
-tr.rowHighlightSuccess > td {
-    background: var(--success);
-    color: #fff;
+tr.complete > td {
+    background: #d1e7dd;
 }
 
-tr.rowHighlightSuccessAwaiting > td{
-    background: var(--danger);
-    color: #fff;
+tr.awaiting-feedback > td{
+    background: #fff3cd;
 }
 
-tr.rowHighlightSuccessUnassigned > td{
-    background: var(--dangerBg);
+tr.unassigned > td{
+    background: #f9d7da;
 }

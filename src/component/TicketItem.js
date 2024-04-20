@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { dateFormat } from "../utils/Auth";
-import { useEffect, useState, useCallback } from "react";
+import { useState } from "react";
 import { Form } from "react-bootstrap";
 import { truncate } from "lodash";
 
 import TicketService from "../api/TicketServices";
 
 export default function TicketItem({ ticket, loadTickets, toaster }) {
-  const [className, setClassName] = useState("");
+  const [className, setClassName] = useState(ticket.status);
 
   const handleChange = async (e) => {
     const { value } = e.target;
@@ -15,7 +15,7 @@ export default function TicketItem({ ticket, loadTickets, toaster }) {
       const res = await TicketService.update({ _id: ticket._id, status: value });
       if (res.success) {
         loadTickets();
-        setBackground(value);
+        setClassName(value);
         toaster(res.message, "success");
       }
     } catch (error) {
@@ -23,26 +23,11 @@ export default function TicketItem({ ticket, loadTickets, toaster }) {
     }
   };
 
-  const setBackground = useCallback((status) => {
-    switch (status) {
-      case "complete":
-        setClassName("rowHighlightSuccess");
-        break;
-      case "awaiting-feedback":
-        setClassName("rowHighlightSuccessAwaiting");
-        break;
-      default:
-        setClassName("rowHighlightSuccessUnassigned");
-    }
-  }, []);
-
-  useEffect(() => {
-    setBackground(ticket.status);
-  }, [ticket.status, setBackground]);
-
   return (
     <tr className={className}>
-      <td>{ticket.title}</td>
+      <td>
+        <Link to={"edit/" + ticket._id}>{ticket.title}</Link>
+      </td>
       <td>
         <Form.Select name="status" value={ticket.status} onChange={handleChange}>
           <option value="unassigned">Unassigned</option>
@@ -52,9 +37,6 @@ export default function TicketItem({ ticket, loadTickets, toaster }) {
       </td>
       <td>{truncate(ticket.description)}</td>
       <td>{dateFormat(ticket.createdAt)}</td>
-      <td>
-        <Link to={"edit/" + ticket._id}>EDIT</Link>
-      </td>
     </tr>
   );
 }

@@ -4,22 +4,22 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { EyeFill, EyeSlashFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { loginFail, loginLoading, loginSuccess } from "./LoginSlice";
 import AuthService from "../../../api/AuthService";
-import { userInfo } from "../../../pages/UserActions";
 import CustomAlert from "../../../shared/CustomAlert";
+import { useAuthStore } from "../../../store";
 
 export default function Login({ setActiveForm }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showEye, setShowEye] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { isLoading, error } = useSelector((state) => state.login);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
   });
+
+  const { setUser } = useAuthStore();
 
   const handleChange = (e) => {
     if (e.target.name === "password") {
@@ -30,18 +30,19 @@ export default function Login({ setActiveForm }) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    dispatch(loginLoading());
     try {
+      setIsLoading(true);
       const res = await AuthService.login(inputs);
       if (res?.status === "success") {
-        dispatch(loginSuccess());
-        dispatch(userInfo());
+        setUser(res?.user);
         navigate("/dashboard");
       }
     } catch (error) {
-      if (error?.data) return dispatch(loginFail(error.data.message));
-      return dispatch(loginFail("Something went wrong!"));
+      if (error?.data) {
+        setError(error.data?.message);
+      }
     }
+    setIsLoading(false);
   };
 
   const togglePass = () => {

@@ -1,9 +1,9 @@
 import axios from "axios";
 import AuthService from "../api/AuthService";
 import { Navigate } from "react-router-dom";
-import { loginFail } from "../component/auth/login/LoginSlice";
-import store from "../store";
+import { useAuthStore } from "../store";
 
+const { logout } = useAuthStore.getState();
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3001/v1/",
 });
@@ -48,12 +48,16 @@ axiosInstance.interceptors.response.use(
           return axios(originalRequest);
         } catch (refreshError) {
           console.error("Refresh token expired");
+          logout();
           localStorage.removeItem("refreshToken");
+          sessionStorage.removeItem("accessToken");
           return Navigate({ to: "/login" });
         }
       } else {
         console.error("No refresh token provided");
-        store.dispatch(loginFail("No refresh token provided"));
+        logout();
+        localStorage.removeItem("refreshToken");
+        sessionStorage.removeItem("accessToken");
         return Navigate({ to: "/login" });
       }
     }

@@ -6,6 +6,7 @@ import Landing from "./pages/Landing.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./component/protected-route/PrivateRoute.js";
+import GuestRoute from "./component/protected-route/GuestRoute.js";
 import TicketList from "./pages/TicketList.js";
 import Profile from "./pages/Profile.js";
 import TicketDetail from "./pages/ticket/id.jsx";
@@ -15,7 +16,9 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<Landing />} exact />
+          <Route path="/" element={<GuestRoute />}>
+            <Route path="/" element={<Landing />} exact />
+          </Route>
           <Route path="/dashboard" element={<PrivateRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
