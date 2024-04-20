@@ -19,6 +19,8 @@ const UserService = {
         const res = await axiosInstance.delete("/user/logout");
         if (res && res.data?.success === true && res.data.message === "Logged out Successfully") {
           logout();
+          localStorage.removeItem("refreshToken");
+          sessionStorage.removeItem("accessToken");
           resolve(true);
         }
       } catch (error) {

@@ -49,11 +49,15 @@ axiosInstance.interceptors.response.use(
         } catch (refreshError) {
           console.error("Refresh token expired");
           logout();
+          localStorage.removeItem("refreshToken");
+          sessionStorage.removeItem("accessToken");
           return Navigate({ to: "/login" });
         }
       } else {
         console.error("No refresh token provided");
         logout();
+        localStorage.removeItem("refreshToken");
+        sessionStorage.removeItem("accessToken");
         return Navigate({ to: "/login" });
       }
     }
