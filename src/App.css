@@ -60,3 +60,10 @@ tr.awaiting-feedback > td{
 tr.unassigned > td{
     background: #f9d7da;
 }
+
+
+@media only screen and (max-width:600px){
+    .app{
+        padding: 0 40px;
+    }
+}

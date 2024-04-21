@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import AppLayout from "../../layout/AppLayout";
 import { Breadcrumb } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { CustomToaster, Notify } from "../../shared/CustomToaster";
+import { CustomToaster, Notify } from "../../shared/CustomToaster.tsx";
 import { useParams } from "react-router-dom";
 import TicketService from "../../api/TicketServices";
 import Form from "react-bootstrap/Form";

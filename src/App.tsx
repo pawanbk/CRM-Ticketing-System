@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import Forget from "./component/auth/Forget.js";
 import Reset from "./component/auth/ResetPassword.js";
@@ -7,8 +8,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./component/protected-route/PrivateRoute.js";
 import GuestRoute from "./component/protected-route/GuestRoute.js";
-import TicketList from "./pages/TicketList.js";
-import Profile from "./pages/Profile.js";
+import TicketList from "./pages/TicketList.tsx";
+import Profile from "./pages/Profile.tsx";
 import TicketDetail from "./pages/ticket/id.jsx";
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<GuestRoute />}>
-            <Route path="/" element={<Landing />} exact />
+            <Route path="/" element={<Landing />} />
           </Route>
           <Route path="/dashboard" element={<PrivateRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />

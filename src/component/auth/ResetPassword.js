@@ -4,8 +4,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { ArrowLeftCircleFill } from "react-bootstrap-icons";
-import { CustomToaster, Notify } from "../../shared/CustomToaster";
-import CustomAlert from "../../shared/CustomAlert";
+import { CustomToaster, Notify } from "../../shared/CustomToaster.tsx";
+import CustomAlert from "../../shared/CustomAlert.tsx";
 import axios from "axios";
 import AuthLayout from "../../layout/AuthLayout";
 
