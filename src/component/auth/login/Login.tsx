@@ -4,17 +4,17 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { EyeFill, EyeSlashFill } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
-import AuthService from "../../../api/AuthService";
-import CustomAlert from "../../../shared/CustomAlert";
-import { useAuthStore } from "../../../store";
-
+import AuthService from "../../../api/AuthService.js";
+import CustomAlert from "../../../shared/CustomAlert.tsx";
+import { useAuthStore } from "../../../store.tsx";
+import { ILoginPayload } from "../../../shared/interface.ts";
 export default function Login({ setActiveForm }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showEye, setShowEye] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<ILoginPayload>({
     email: "",
     password: "",
   });
@@ -63,7 +63,7 @@ export default function Login({ setActiveForm }) {
         </div>
       </Form.Group>
       <Form.Check label="Remember me" />
-      <Button className="form-control mt-3 button" type="submit" disabled={isLoading && "disabled"}>
+      <Button className="form-control mt-3 button" type="submit" disabled={isLoading}>
         {isLoading ? "Loading ..." : "Login"}
       </Button>
       <div className="mt-3 d-flex flex-column align-items-end" style={{ width: "100%" }}>

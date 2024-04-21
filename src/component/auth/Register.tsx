@@ -3,10 +3,11 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Col, Row } from "react-bootstrap";
 import AuthService from "../../api/AuthService";
-import CustomAlert from "../../shared/CustomAlert";
+import CustomAlert from "../../shared/CustomAlert.tsx";
+import { ISignupPayload } from "../../shared/interface";
 
 export default function Register({ setActiveForm }) {
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<ISignupPayload>({
     firstName: "",
     lastName: "",
     email: "",

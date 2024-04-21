@@ -1,20 +1,21 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import AppLayout from "../layout/AppLayout";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { LinkContainer } from "react-router-bootstrap";
 import TicketItem from "../component/TicketItem";
 import "./TicketList.css";
-import Search from "../component/search/Search";
 import { Button } from "react-bootstrap";
 import AddTicket from "../component/AddTicket";
 import TicketService from "../api/TicketServices";
 import { PlusCircle } from "react-bootstrap-icons";
-import { CustomToaster, Notify } from "../shared/CustomToaster";
+import { CustomToaster, Notify } from "../shared/CustomToaster.tsx";
 import { FormSelect, Form } from "react-bootstrap";
+import { ITicket } from "../shared/interface";
 
 export default function TicketList() {
   const [modalShow, setModalShow] = useState(false);
-  const [tickets, setTickets] = useState([]);
+  const [tickets, setTickets] = useState<ITicket[]>([]);
   const [selectedFilter, setSelectedFilter] = useState({
     status: "all",
     title: "",
@@ -25,7 +26,8 @@ export default function TicketList() {
   const fetchTickets = async () => {
     try {
       const data = await TicketService.getAll(selectedFilter);
-      setTickets(data.tickets);
+      const tickets: ITicket[] = data.tickets;
+      setTickets(tickets);
     } catch (error) {
       console.log(error);
     }

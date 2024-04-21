@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Login from "../component/auth/login/Login";
-import Register from "../component/auth/Register";
+import Login from "../component/auth/login/Login.tsx";
+import Register from "../component/auth/Register.tsx";
 import "./Landing.css";
 import CardBody from "react-bootstrap/CardBody";
 import Card from "react-bootstrap/Card";

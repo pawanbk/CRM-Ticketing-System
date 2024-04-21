@@ -1,4 +1,4 @@
-import axiosInstance from "../config/axios";
+import axiosInstance from "../config/axios.ts";
 
 const TicketService = {
   getAll: async (filters) => {

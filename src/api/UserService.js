@@ -1,5 +1,5 @@
-import axiosInstance from "../config/axios";
-import { useAuthStore } from "../store";
+import axiosInstance from "../config/axios.ts";
+import { useAuthStore } from "../store.tsx";
 
 const UserService = {
   getProfile: () => {
