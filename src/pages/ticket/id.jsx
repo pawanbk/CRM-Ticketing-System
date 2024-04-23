@@ -27,8 +27,9 @@ export default function TicketDetail(props) {
   const addComment = async() =>{
     try{
       const res = await TicketService.comment(id,commentInput);
-      if(res.success === true) {
-        setTicket(await res.ticket)
+      console.log(res)
+      if(res.data?.success === true) {
+        fetchTicket();
       }
     }catch(error){
 
@@ -77,40 +78,40 @@ export default function TicketDetail(props) {
         <Breadcrumb.Item active>{ticket.title}</Breadcrumb.Item>
       </Breadcrumb>
       <div className="edit-form border rounded">
-            <Form onSubmit={updateTicket}>
-              <Form.Group className="mb-3 form-group">
-                <Form.Label>Title</Form.Label>
-                <Form.Control required type="text" name="title" value={ticket.title} onChange={handleChange} />
-              </Form.Group>
-              <Form.Group className="mb-3 form-group">
-                <Form.Label>Status</Form.Label>
-                <Form.Select required type="select" name="status" onChange={handleChange}>
-                  <option>Select One</option>
-                  <option value="unassigned" selected={ticket.status === "unassigned"}>
-                    Unassigned
-                  </option>
-                  <option value="awaiting-feedback" selected={ticket.status === "awaiting-feedback"}>
-                    Awaiting Feedback
-                  </option>
-                  <option value="complete" selected={ticket.status === "complete"}>
-                    Complete
-                  </option>
-                </Form.Select>
-              </Form.Group>
-              <Form.Group className="mb-3 form-group">
-                <Form.Label>Description</Form.Label>
-                <Form.Control as="textarea" placeholder="Leave a comment here" name="description" value={ticket.description} style={{ height: "100px" }} onChange={handleChange} />
-              </Form.Group>
-              <Button className="form-control mt-3 button" type="submit">
-                Update
-              </Button>
-            </Form>
+        <Form onSubmit={updateTicket}>
+          <Form.Group className="mb-3 form-group">
+            <Form.Label>Title</Form.Label>
+            <Form.Control required type="text" name="title" value={ticket.title} onChange={handleChange} />
+          </Form.Group>
+          <Form.Group className="mb-3 form-group">
+            <Form.Label>Status</Form.Label>
+            <Form.Select required type="select" name="status" onChange={handleChange}>
+              <option>Select One</option>
+              <option value="unassigned" selected={ticket.status === "unassigned"}>
+                Unassigned
+              </option>
+              <option value="awaiting-feedback" selected={ticket.status === "awaiting-feedback"}>
+                Awaiting Feedback
+              </option>
+              <option value="complete" selected={ticket.status === "complete"}>
+                Complete
+              </option>
+            </Form.Select>
+          </Form.Group>
+          <Form.Group className="mb-3 form-group">
+            <Form.Label>Description</Form.Label>
+            <Form.Control as="textarea" placeholder="Leave a comment here" name="description" value={ticket.description} style={{ height: "100px" }} onChange={handleChange} />
+          </Form.Group>
+          <Button className="form-control mt-3 button" type="submit">
+            Update
+          </Button>
+        </Form>
       </div>
       <div className="comment-box d-flex flex-column gap-2 border-start rounded">
         <CommentInput commentInput={commentInput} change ={(e)=> setCommentInput(e.target.value)} addComment={addComment}/>
-        {ticket.comments && ticket.comments.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt)).map((comment) =>
+        {ticket.comments && ticket.comments.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt)).filter((comment) => !comment.parentId ).map((comment) =>
         <div className="rounded comment-item">
-            <CommentItem comment={comment} />
+            <CommentItem key={comment._id} comment={comment} fetchTicket={fetchTicket} />
         </div>
         )}
         
