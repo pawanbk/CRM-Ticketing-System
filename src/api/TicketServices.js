@@ -48,9 +48,9 @@ const TicketService = {
     }
   },
 
-  comment: async (_id, comment) => {
+  comment: async (ticketId, content) => {
     try {
-      return await axiosInstance.post("/ticket/comment", { _id, comment });
+      return await axiosInstance.post("/ticket/comment", { ticketId, content });
     } catch (error) {
       return error;
     }

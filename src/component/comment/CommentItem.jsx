@@ -3,8 +3,9 @@ import CommentInput from "./CommentInput"
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import TicketService from "../../api/TicketServices";
+import { capitalize } from "lodash";
 
-const CommentItem = ({comment,setComments}) => {
+const CommentItem = ({comment, fetchTicket}) => {
     const { id } = useParams();
     const secondsInDay = 24*60*60;
     const timeDifference = Math.abs(new Date() - new Date(comment.createdAt)) / 1000;
@@ -12,46 +13,51 @@ const CommentItem = ({comment,setComments}) => {
     const [isReplying, setIsReplying] = useState(false);
     const [showChildNodes, setShowChildNodes] = useState(false);
 
-    const [replies, setReplies] = useState(comment.comments);
-
     const [replyInput, setReplyInput] = useState("");
   
-    const addReplies = ()=>{
-        // console.log(replyInput)
-        // setReplies((prev)=>[{id:'', message:replyInput, comments:[]}, ...prev])
-        TicketService.reply(id, comment._id, replyInput )
-        setReplyInput('')
-        setIsReplying(false)
-    }
-    return(
-    <div className="p-1">
-        <div className="d-flex justify-between">
-            <span>{comment?.message}</span>
-            {timeDifference > secondsInDay ? 
-            moment(comment?.createdAt).format('DD-MM-YY h:mm a') 
-            : moment(comment?.createdAt).fromNow(true)} 
-
-        </div>
-      
-        <div className="px-2">
-            <button className="btn-small" onClick={()=>setIsReplying(true)}>Reply</button>
-            { replies && replies.length > 0 && (showChildNodes ? <button className="btn-small mx-2" onClick={()=>setShowChildNodes(false)}>Hide all</button> :<button className="btn-small mx-2" onClick={()=>setShowChildNodes(true)}>View all</button>)}
-        </div>
-        
-        {showChildNodes && replies && replies.map((comment) =>
-            <div className="pl-1 border-start border-dark">
-                <CommentItem comment={comment} />
-            </div>
-        )}
-        {isReplying && 
-            <CommentInput 
-                commentInput={replyInput} 
-                change = {(e) => setReplyInput(e.target.value)} 
-                addComment={addReplies} 
-                cancelBtn={true} 
-                hideCommentInput={() => setIsReplying(false)}/>
+    const addReplies = async ()=>{
+        const res = await TicketService.reply(id, comment._id, replyInput )
+        if(res.data.success === true){
+            setReplyInput('')
+            setIsReplying(false)
+            fetchTicket();
         }
-    </div>
+      
+    }
+
+    return(
+        <div className="p-1">
+            <span className="text-primary">{capitalize(comment.authorId?.firstName)}</span>
+            <div className="d-flex justify-between">
+                <span>{comment?.content}</span>
+                {timeDifference > secondsInDay ? 
+                moment(comment?.createdAt).format('DD-MM-YY h:mm a') 
+                : moment(comment?.createdAt).fromNow(true)} 
+            </div>
+        
+            <div className="px-2">
+                <button className="btn-small" onClick={()=>setIsReplying(true)}>Reply</button>
+                { comment.replies?.length > 0 && (showChildNodes ? 
+                <button className="btn-small mx-2" onClick={()=>setShowChildNodes(false)}>Hide Replies</button> 
+                :<button className="btn-small mx-2" onClick={()=>setShowChildNodes(true)}>View Replies</button>)
+                }
+            </div>
+            
+            {showChildNodes && comment.replies?.map((comment) =>
+                <div className="p-2 mb-1 border-start border-dark">
+                    <CommentItem key={comment.id} comment={comment} fetchTicket={fetchTicket}/>
+                </div>
+            )}
+
+            {(isReplying)&& 
+                <CommentInput 
+                    commentInput={replyInput} 
+                    change = {(e) => setReplyInput(e.target.value)} 
+                    addComment={addReplies} 
+                    cancelBtn={true} 
+                    hideCommentInput={() => setIsReplying(false)}/>
+            }
+        </div>
     )
 }
 
