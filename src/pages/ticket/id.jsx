@@ -10,6 +10,7 @@ import Button from "react-bootstrap/Button";
 import "./id.css";
 import CommentInput from "../../component/comment/CommentInput";
 import CommentItem from "../../component/comment/CommentItem";
+import { useAuthStore } from "../../store.tsx";
 
 
 export default function TicketDetail(props) {
@@ -22,12 +23,13 @@ export default function TicketDetail(props) {
     comments:[]
   });
 
+  const { user } = useAuthStore();
+
   const [commentInput, setCommentInput] = useState("");
 
   const addComment = async() =>{
     try{
       const res = await TicketService.comment(id,commentInput);
-      console.log(res)
       if(res.data?.success === true) {
         fetchTicket();
       }
@@ -81,11 +83,11 @@ export default function TicketDetail(props) {
         <Form onSubmit={updateTicket}>
           <Form.Group className="mb-3 form-group">
             <Form.Label>Title</Form.Label>
-            <Form.Control required type="text" name="title" value={ticket.title} onChange={handleChange} />
+            <Form.Control required type="text" name="title" value={ticket.title} onChange={handleChange} disabled={ticket.authorId !== user.id} />
           </Form.Group>
           <Form.Group className="mb-3 form-group">
             <Form.Label>Status</Form.Label>
-            <Form.Select required type="select" name="status" onChange={handleChange}>
+            <Form.Select required type="select" name="status" onChange={handleChange} disabled={ticket.authorId !== user.id} >
               <option>Select One</option>
               <option value="unassigned" selected={ticket.status === "unassigned"}>
                 Unassigned
@@ -100,22 +102,25 @@ export default function TicketDetail(props) {
           </Form.Group>
           <Form.Group className="mb-3 form-group">
             <Form.Label>Description</Form.Label>
-            <Form.Control as="textarea" placeholder="Leave a comment here" name="description" value={ticket.description} style={{ height: "100px" }} onChange={handleChange} />
+            <Form.Control as="textarea" placeholder="Leave a comment here" name="description" value={ticket.description} style={{ height: "100px" }} onChange={handleChange} disabled={ticket.authorId !== user.id} />
           </Form.Group>
-          <Button className="form-control mt-3 button" type="submit">
-            Update
-          </Button>
+          {
+            (ticket.authorId === user.id) ? <Button className="form-control mt-3 button" type="submit">
+            Update </Button> : <Button className="form-control mt-3 button" type="submit" disabled>Update</Button>
+          }
         </Form>
       </div>
-      <div className="comment-box d-flex flex-column gap-2 border-start rounded">
-        <CommentInput commentInput={commentInput} change ={(e)=> setCommentInput(e.target.value)} addComment={addComment}/>
+      <div className="comment-section d-flex flex-column gap-2 border-start rounded">
+        <h5>Comments</h5>
         {ticket.comments && ticket.comments.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt)).filter((comment) => !comment.parentId ).map((comment) =>
         <div className="rounded comment-item">
-            <CommentItem key={comment._id} comment={comment} fetchTicket={fetchTicket} />
+          <CommentItem key={comment._id} comment={comment} fetchTicket={fetchTicket} />
         </div>
         )}
-        
       </div>  
+      <div className="comment-box">
+        <CommentInput commentInput={commentInput} change ={(e)=> setCommentInput(e.target.value)} addComment={addComment}/>
+      </div>
      
       <CustomToaster />
       

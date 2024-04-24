@@ -27,7 +27,7 @@ const CommentItem = ({comment, fetchTicket}) => {
 
     return(
         <div className="p-1">
-            <span className="text-primary">{capitalize(comment.authorId?.firstName)}</span>
+            <span className="text-primary">{capitalize(comment.author?.firstName)}</span>
             <div className="d-flex justify-between">
                 <span>{comment?.content}</span>
                 {timeDifference > secondsInDay ? 

@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import Forget from "./component/auth/Forget.js";
-import Reset from "./component/auth/ResetPassword.js";
+import Reset from "./component/auth/ResetPassword.jsx";
 import Dashboard from "./pages/dashboard/Dashboard.js";
 import Landing from "./pages/Landing.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
