@@ -3,7 +3,7 @@ import AppLayout from "../../layout/AppLayout";
 import { Breadcrumb } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { CustomToaster, Notify } from "../../shared/CustomToaster.tsx";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TicketService from "../../api/TicketServices";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -15,6 +15,7 @@ import { useAuthStore } from "../../store.tsx";
 
 export default function TicketDetail(props) {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [ticket, setTicket] = useState({
     _id: "",
     title: "",
@@ -47,6 +48,9 @@ export default function TicketDetail(props) {
       }
     } catch (error) {
       console.log(error)
+      if(error.response && (error.response.status === 404 || error.response.status === 400)){
+        navigate("/404")
+      }
     }
   };
 
