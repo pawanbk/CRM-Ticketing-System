@@ -6,6 +6,8 @@ import Card from "react-bootstrap/Card";
 import { ArrowLeftCircleFill } from "react-bootstrap-icons";
 import axios from "axios";
 import AuthLayout from "../../layout/AuthLayout";
+import CustomAlert from "../../shared/CustomAlert.tsx";
+import "./Forget.css";
 
 export default function Forget() {
   const API_URL = "http://localhost:3001/v1/user/reset-password";
@@ -15,11 +17,14 @@ export default function Forget() {
     email: "",
   });
 
+  const [error, setError] = useState("");
+
   const handleChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
   const submitForm = (e) => {
+    setError("");
     setLoading(true);
     e.preventDefault();
     axios
@@ -31,7 +36,9 @@ export default function Forget() {
         }
       })
       .catch((error) => {
-        console.log(error);
+        setLoading(false);
+        console.error(error);
+        setError(error?.response?.data?.message);
       });
   };
 
@@ -44,10 +51,12 @@ export default function Forget() {
               <ArrowLeftCircleFill className="icon" onClick={() => navigate(-1)} />
               Forget Password
             </Card.Title>
+            {error && <CustomAlert variant="error" message={error} />}
+
             <Form onSubmit={submitForm}>
               <Form.Group className="mb-3 form-group">
                 <Form.Label>Email</Form.Label>
-                <Form.Control required type="email" name="email" placeholder="doe@gmail.com" value={inputs.email} onChange={handleChange} />
+                <Form.Control required type="email" name="email" value={inputs.email} onChange={handleChange} />
                 <Form.Text id="passwordHelpBlock" muted>
                   {" "}
                   Enter the email address you used during the registration. Then we'll email a link to this address.

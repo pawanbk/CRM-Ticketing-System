@@ -3,7 +3,7 @@ import "./Login.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { EyeFill, EyeSlashFill } from "react-bootstrap-icons";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AuthService from "../../../api/AuthService.js";
 import CustomAlert from "../../../shared/CustomAlert.tsx";
 import { useAuthStore } from "../../../store.tsx";
@@ -20,6 +20,8 @@ export default function Login({ setActiveForm }) {
   });
 
   const { setUser } = useAuthStore();
+
+  const {state} = useLocation()
 
   const handleChange = (e) => {
     if (e.target.name === "password") {
@@ -50,6 +52,7 @@ export default function Login({ setActiveForm }) {
   };
   return (
     <Form onSubmit={onSubmit}>
+      {state?.message && <CustomAlert variant="success" message={state.message} />}
       {error && <CustomAlert variant="danger" message={error} />}
       <Form.Group className="mb-3 form-group">
         <Form.Label>Username</Form.Label>
