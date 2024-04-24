@@ -8,6 +8,7 @@ import { CustomToaster, Notify } from "../../shared/CustomToaster.tsx";
 import CustomAlert from "../../shared/CustomAlert.tsx";
 import axios from "axios";
 import AuthLayout from "../../layout/AuthLayout.js";
+import LoadingAnimation from "../../shared/LoadingAnimation.tsx";
 
 export default function Reset() {
   const navigate = useNavigate();
@@ -77,7 +78,7 @@ export default function Reset() {
                 <Form.Control required type="password" name="confirmPassword" value={inputs.confirmPassword} onChange={handleChange} />
               </Form.Group>
               <Button className="form-control mt-3 button" type="submit" disabled={isLoading && "disabled"}>
-                {isLoading ? "Loading..." : "Submit"}
+                {isLoading ? <LoadingAnimation /> : "Submit"}
               </Button>
             </Form>
           </Card.Body>

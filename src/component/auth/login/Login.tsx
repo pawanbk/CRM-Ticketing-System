@@ -8,6 +8,8 @@ import AuthService from "../../../api/AuthService.js";
 import CustomAlert from "../../../shared/CustomAlert.tsx";
 import { useAuthStore } from "../../../store.tsx";
 import { ILoginPayload } from "../../../shared/interface.ts";
+import LoadingAnimation from "../../../shared/LoadingAnimation.tsx";
+
 export default function Login({ setActiveForm }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showEye, setShowEye] = useState(false);
@@ -67,7 +69,7 @@ export default function Login({ setActiveForm }) {
       </Form.Group>
       <Form.Check label="Remember me" />
       <Button className="form-control mt-3 button" type="submit" disabled={isLoading}>
-        {isLoading ? "Loading ..." : "Login"}
+        {isLoading ? <LoadingAnimation />: "Login"}     
       </Button>
       <div className="mt-3 d-flex flex-column align-items-end" style={{ width: "100%" }}>
         <Button variant="link" onClick={() => setActiveForm("register")}>

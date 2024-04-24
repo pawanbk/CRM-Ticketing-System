@@ -1,0 +1,21 @@
+.loading-box1,.loading-box2,.loading-box3{
+    width:15px; 
+    height:15px;
+    display: block;
+    animation: loadingBox;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    background-color: #ffff;
+    border-radius: 50%;
+    animation-timing-function: ease-in-out; 
+  }
+  .loading-box1{
+    animation-delay: 0.0s;
+  
+  }
+  .loading-box2{
+    animation-delay: 0.1s;
+  }
+  .loading-box3{
+    animation-delay: 0.2s;
+  }

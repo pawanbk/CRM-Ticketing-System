@@ -8,6 +8,7 @@ import axios from "axios";
 import AuthLayout from "../../layout/AuthLayout";
 import CustomAlert from "../../shared/CustomAlert.tsx";
 import "./Forget.css";
+import LoadingAnimation from "../../shared/LoadingAnimation.tsx";
 
 export default function Forget() {
   const API_URL = "http://localhost:3001/v1/user/reset-password";
@@ -63,7 +64,7 @@ export default function Forget() {
                 </Form.Text>
               </Form.Group>
               <Button className="form-control mt-3 button" type="submit" disabled={loading && "disabled"}>
-                {loading ? "Loading....." : "Send Link"}
+                {loading ? <LoadingAnimation /> : "Send Link"}
               </Button>
             </Form>
           </Card.Body>
