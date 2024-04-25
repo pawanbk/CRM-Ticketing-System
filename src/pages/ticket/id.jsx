@@ -11,15 +11,19 @@ import "./id.css";
 import CommentInput from "../../component/comment/CommentInput";
 import CommentItem from "../../component/comment/CommentItem";
 import { useAuthStore } from "../../store.tsx";
+import io from "socket.io-client";
+
+const socket = io("http://localhost:3001");
 
 
-export default function TicketDetail(props) {
+export default function TicketDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [ticket, setTicket] = useState({
     _id: "",
     title: "",
     status: "",
+    author:"",
     description: "",
     comments:[]
   });
@@ -33,6 +37,7 @@ export default function TicketDetail(props) {
       const res = await TicketService.comment(id,commentInput);
       if(res.data?.success === true) {
         fetchTicket();
+        socket.emit("comment-created", {type:'comment', message: `${user?.username} commented on your ticket.`, user: user?.id || "", ticketId: id, author: ticket.author, link: `/tickets/edit/${id}`});
       }
     }catch(error){
 
