@@ -1,11 +1,14 @@
 :root{
-    /* --primary : #712cf8; */
     --primary : #111245;
     --link: #2D84F7;
     --secondary: #c4bed0;
     --danger: #ff5402;
     --dangerBg: #fff8f4;
     --success:#18864b;
+}
+
+.text-color-primary{
+    color: var(--primary) !important;
 }
 
 td>a{
@@ -63,17 +66,17 @@ tr.unassigned > td{
 
 
   
-  @keyframes loadingBox {
+@keyframes loadingBox {
     0%{
-      transform: scale(1.0);
+        transform: scale(1.0);
     }
     50%{
-      transform: scale(0.5);
+        transform: scale(0.5);
     }
     100%{
-      transform: scale(1.0);
+        transform: scale(1.0);
     }
-  }
+}
 
 @media only screen and (max-width:600px){
     .app{
