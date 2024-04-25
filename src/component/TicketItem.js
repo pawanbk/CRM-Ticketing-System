@@ -5,9 +5,12 @@ import { Form } from "react-bootstrap";
 import { truncate } from "lodash";
 
 import TicketService from "../api/TicketServices";
+import { useAuthStore } from "../store.tsx";
 
 export default function TicketItem({ ticket, loadTickets, toaster }) {
   const [className, setClassName] = useState(ticket.status);
+
+  const { user } = useAuthStore();
 
   const handleChange = async (e) => {
     const { value } = e.target;
@@ -29,7 +32,7 @@ export default function TicketItem({ ticket, loadTickets, toaster }) {
         <Link to={"edit/" + ticket._id}>{ticket.title}</Link>
       </td>
       <td>
-        <Form.Select name="status" value={ticket.status} onChange={handleChange}>
+        <Form.Select name="status" value={ticket.status} onChange={handleChange} disabled={ticket?.author !== user?.id}>
           <option value="unassigned">Unassigned</option>
           <option value="awaiting-feedback">Awaiting Feedback</option>
           <option value="complete">Complete</option>

@@ -87,11 +87,11 @@ export default function TicketDetail(props) {
         <Form onSubmit={updateTicket}>
           <Form.Group className="mb-3 form-group">
             <Form.Label>Title</Form.Label>
-            <Form.Control required type="text" name="title" value={ticket.title} onChange={handleChange} disabled={ticket.authorId !== user.id} />
+            <Form.Control required type="text" name="title" value={ticket.title} onChange={handleChange} disabled={ticket.author !== user.id} />
           </Form.Group>
           <Form.Group className="mb-3 form-group">
             <Form.Label>Status</Form.Label>
-            <Form.Select required type="select" name="status" onChange={handleChange} disabled={ticket.authorId !== user.id} >
+            <Form.Select required type="select" name="status" onChange={handleChange} disabled={ticket.author !== user.id} >
               <option>Select One</option>
               <option value="unassigned" selected={ticket.status === "unassigned"}>
                 Unassigned
@@ -106,10 +106,10 @@ export default function TicketDetail(props) {
           </Form.Group>
           <Form.Group className="mb-3 form-group">
             <Form.Label>Description</Form.Label>
-            <Form.Control as="textarea" placeholder="Leave a comment here" name="description" value={ticket.description} style={{ height: "100px" }} onChange={handleChange} disabled={ticket.authorId !== user.id} />
+            <Form.Control as="textarea" placeholder="Leave a comment here" name="description" value={ticket.description} style={{ height: "100px" }} onChange={handleChange} disabled={ticket.author !== user.id} />
           </Form.Group>
           {
-            (ticket.authorId === user.id) ? <Button className="form-control mt-3 button" type="submit">
+            (ticket.author === user.id) ? <Button className="form-control mt-3 button" type="submit">
             Update </Button> : <Button className="form-control mt-3 button" type="submit" disabled>Update</Button>
           }
         </Form>
