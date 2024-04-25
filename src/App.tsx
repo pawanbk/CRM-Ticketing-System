@@ -11,6 +11,7 @@ import GuestRoute from "./component/protected-route/GuestRoute.js";
 import TicketList from "./pages/TicketList.tsx";
 import Profile from "./pages/Profile.tsx";
 import TicketDetail from "./pages/ticket/id.jsx";
+import PageNotFound from "./pages/404/404.tsx";
 
 function App() {
   return (
@@ -34,6 +35,8 @@ function App() {
           </Route>
           <Route path="/forget-password" element={<Forget />} />
           <Route path="/reset-password" element={<Reset />} />
+          <Route path="/404" element={<PageNotFound />} />
+          <Route path="*" element={ <PageNotFound />} />
         </Routes>
       </Router>
     </div>

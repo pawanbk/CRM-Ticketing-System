@@ -1,0 +1,22 @@
+.notification-container{
+    min-width: 200px;
+    min-height:50px;
+    z-index:999;
+    padding:1rem;
+    position:absolute;
+    right:20px;
+    background:#fff;
+}
+
+.btn-close{
+    position:absolute;
+    top:2px;
+    right:2px;
+    padding:0.5rem;
+    cursor:pointer;
+    font-size: x-small;
+}
+
+a{
+    text-decoration: none;
+}

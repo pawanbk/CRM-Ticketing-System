@@ -3,7 +3,7 @@ export interface ITicket {
     title: string,
     description: string,
     status: string,
-    authorId: string,
+    author: string,
     comments: [],
     createdAt: string,
     modifiedAt: string,

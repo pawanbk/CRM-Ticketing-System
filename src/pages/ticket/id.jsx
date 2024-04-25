@@ -3,7 +3,7 @@ import AppLayout from "../../layout/AppLayout";
 import { Breadcrumb } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { CustomToaster, Notify } from "../../shared/CustomToaster.tsx";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TicketService from "../../api/TicketServices";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -11,14 +11,19 @@ import "./id.css";
 import CommentInput from "../../component/comment/CommentInput";
 import CommentItem from "../../component/comment/CommentItem";
 import { useAuthStore } from "../../store.tsx";
+import io from "socket.io-client";
+
+const socket = io("http://localhost:3001");
 
 
-export default function TicketDetail(props) {
+export default function TicketDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [ticket, setTicket] = useState({
     _id: "",
     title: "",
     status: "",
+    author:"",
     description: "",
     comments:[]
   });
@@ -32,6 +37,7 @@ export default function TicketDetail(props) {
       const res = await TicketService.comment(id,commentInput);
       if(res.data?.success === true) {
         fetchTicket();
+        socket.emit("comment-created", {type:'comment', message: `${user?.username} commented on your ticket.`, user: user?.id || "", ticketId: id, author: ticket.author, link: `/tickets/edit/${id}`});
       }
     }catch(error){
 
@@ -47,6 +53,9 @@ export default function TicketDetail(props) {
       }
     } catch (error) {
       console.log(error)
+      if(error.response && (error.response.status === 404 || error.response.status === 400)){
+        navigate("/404")
+      }
     }
   };
 
@@ -83,11 +92,11 @@ export default function TicketDetail(props) {
         <Form onSubmit={updateTicket}>
           <Form.Group className="mb-3 form-group">
             <Form.Label>Title</Form.Label>
-            <Form.Control required type="text" name="title" value={ticket.title} onChange={handleChange} disabled={ticket.authorId !== user.id} />
+            <Form.Control required type="text" name="title" value={ticket.title} onChange={handleChange} disabled={ticket.author !== user.id} />
           </Form.Group>
           <Form.Group className="mb-3 form-group">
             <Form.Label>Status</Form.Label>
-            <Form.Select required type="select" name="status" onChange={handleChange} disabled={ticket.authorId !== user.id} >
+            <Form.Select required type="select" name="status" onChange={handleChange} disabled={ticket.author !== user.id} >
               <option>Select One</option>
               <option value="unassigned" selected={ticket.status === "unassigned"}>
                 Unassigned
@@ -102,10 +111,10 @@ export default function TicketDetail(props) {
           </Form.Group>
           <Form.Group className="mb-3 form-group">
             <Form.Label>Description</Form.Label>
-            <Form.Control as="textarea" placeholder="Leave a comment here" name="description" value={ticket.description} style={{ height: "100px" }} onChange={handleChange} disabled={ticket.authorId !== user.id} />
+            <Form.Control as="textarea" placeholder="Leave a comment here" name="description" value={ticket.description} style={{ height: "100px" }} onChange={handleChange} disabled={ticket.author !== user.id} />
           </Form.Group>
           {
-            (ticket.authorId === user.id) ? <Button className="form-control mt-3 button" type="submit">
+            (ticket.author === user.id) ? <Button className="form-control mt-3 button" type="submit">
             Update </Button> : <Button className="form-control mt-3 button" type="submit" disabled>Update</Button>
           }
         </Form>

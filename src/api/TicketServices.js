@@ -6,7 +6,7 @@ const TicketService = {
       const res = await axiosInstance.get("ticket/all", { params: filters });
       if (res && res.status === 200 && res.data.success === true) return res.data;
     } catch (error) {
-      return error;
+      return Promise.reject(error);
     }
   },
 
@@ -16,7 +16,7 @@ const TicketService = {
       const res = await axiosInstance.post("/ticket", inputs);
       if (res && res.status === 201 && res.data.success === true) return res.data;
     } catch (error) {
-      return error;
+      return Promise.reject(error);
     }
   },
 
@@ -26,7 +26,7 @@ const TicketService = {
       const res = await axiosInstance.get("/ticket/edit/" + id);
       if (res && res.status === 200 && res.data.success === true) return res.data;
     } catch (error) {
-      return error;
+      return Promise.reject(error);
     }
   },
 
@@ -35,7 +35,7 @@ const TicketService = {
       const res = await axiosInstance.get("/ticket/recently/updated");
       if (res && res.data.success === true) return res.data;
     } catch (error) {
-      return error;
+      return Promise.reject(error);
     }
   },
 
@@ -44,7 +44,7 @@ const TicketService = {
       const res = await axiosInstance.post("/ticket/update", inputs);
       if (res && res.status === 200 && res.data.success === true) return res.data;
     } catch (error) {
-      return error;
+      return Promise.reject(error);
     }
   },
 
@@ -52,7 +52,7 @@ const TicketService = {
     try {
       return await axiosInstance.post("/ticket/comment", { ticketId, content });
     } catch (error) {
-      return error;
+      return Promise.reject(error);
     }
   },
 
@@ -60,7 +60,7 @@ const TicketService = {
     try {
       return await axiosInstance.post("/ticket/comment/reply", { ticketId, commentId, reply });
     } catch (error) {
-      return error;
+      return Promise.reject(error);
     }
   },
 };
