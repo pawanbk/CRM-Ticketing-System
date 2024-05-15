@@ -28,6 +28,17 @@ const UserService = {
       }
     });
   },
+
+  assignees: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axiosInstance.get("/user/all");
+        resolve(res);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
 };
 
 export default UserService;

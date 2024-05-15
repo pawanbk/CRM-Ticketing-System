@@ -19,7 +19,7 @@ export default function AppLayout({ children }) {
   useEffect(() => {
     socket.emit("join", user?.id);
     socket.on(`comment-received-${user?.id}`, (data) => {
-      setNotification({ message: data?.message, link: data?.link, show: true });
+      if (data.author !== user?.id) setNotification({ message: data?.message, link: data?.link, show: true });
     });
     socket.on(`reply-received-${user?.id}`, (data) => {
       setNotification({ message: data?.message, link: data?.link, show: true });
