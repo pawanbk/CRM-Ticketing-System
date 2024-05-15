@@ -39,9 +39,9 @@ const TicketService = {
     }
   },
 
-  update: async (inputs) => {
+  update: async (inputs, assignees) => {
     try {
-      const res = await axiosInstance.post("/ticket/update", inputs);
+      const res = await axiosInstance.post("/ticket/update", { ...inputs, assignees });
       if (res && res.status === 200 && res.data.success === true) return res.data;
     } catch (error) {
       return Promise.reject(error);
