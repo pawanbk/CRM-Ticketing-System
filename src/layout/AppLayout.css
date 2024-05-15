@@ -1,10 +1,18 @@
-main{
+.app-layout{
     width:100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.main-content{
+    margin: 0 auto;
+    height: 100vh;
     display:flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     gap:20px;
 }
-
 
 @media only screen and (max-width: 600px) {
     main{

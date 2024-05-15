@@ -1,25 +1,11 @@
-.primary{
-    color:#fff !important;
-    background:var(--primary)!important;
+.top-nav{
+    width: (100vw - 200px) !important;
+    height:40px;
+    position: sticky;
+    background: #fff;
+    font-size:17px;
+    margin:0;
 }
-
-.icon{
-    
-    font-size:30px;
-}
-.icon-btn{
-    display:flex;
-    flex-direction: row;
-    align-items: center;
-    gap:10px;
-}
-
-
-.hidden{
-    display: hidden;
-}
-
-
 
 @media only screen and (max-width:600px) {
     .hidden{

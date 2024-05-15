@@ -112,101 +112,103 @@ export default function TicketDetail() {
   }, []);
   return (
     <AppLayout>
-      <Breadcrumb className="d-flex justify-center">
-        <LinkContainer to="/dashboard">
-          <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
-        </LinkContainer>
-        <LinkContainer to="/tickets">
-          <Breadcrumb.Item>Tickets</Breadcrumb.Item>
-        </LinkContainer>
-        <Breadcrumb.Item active>{ticket.title}</Breadcrumb.Item>
-      </Breadcrumb>
-      <div className="edit-form border rounded">
-        <Form onSubmit={updateTicket}>
-          <Form.Group className="mb-3 form-group">
-            <Form.Label>Title</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              name="title"
-              value={ticket.title}
-              onChange={handleChange}
-              disabled={ticket.author !== user.id} />
-          </Form.Group>
-          <Form.Group className="mb-3 form-group">
-            <Form.Label>Assignee Picker</Form.Label>
-            <Form.Select className="picker" type="select" name="assignees" onChange={addAssignees} >
-              <option value="">Select</option>
-              {assignees?.map((assignee) =>
-                <option value={assignee._id} >
-                  {assignee.fullName}
+      <div className="wrapper">
+        <Breadcrumb>
+          <LinkContainer to="/dashboard">
+            <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+          </LinkContainer>
+          <LinkContainer to="/tickets">
+            <Breadcrumb.Item>Tickets</Breadcrumb.Item>
+          </LinkContainer>
+          <Breadcrumb.Item active>{ticket.title}</Breadcrumb.Item>
+        </Breadcrumb>
+        <div className="edit-form border rounded">
+          <Form onSubmit={updateTicket}>
+            <Form.Group className="mb-3 form-group">
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                name="title"
+                value={ticket.title}
+                onChange={handleChange}
+                disabled={ticket.author !== user.id} />
+            </Form.Group>
+            <Form.Group className="mb-3 form-group">
+              <Form.Label>Assignee Picker</Form.Label>
+              <Form.Select className="picker" type="select" name="assignees" onChange={addAssignees} >
+                <option value="">Select</option>
+                {assignees?.map((assignee) =>
+                  <option value={assignee._id} >
+                    {assignee.fullName}
+                  </option>
+                )}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3 form-group">
+              <Form.Label>Selected Assignees</Form.Label>
+              <div className="border rounded bg-white">
+                {selectedAssignees.length ? selectedAssignees.map((assignee) =>
+                  <div className="badge bg-primary me-1">
+                    {assignees.find((item) => item._id === assignee).fullName}
+                    <span
+                      className="btn-cancel"
+                      onClick={() => setSelectedAssignees(selectedAssignees.filter((item) => item !== assignee))}
+                    >
+                      &times;
+                    </span>
+                  </div>
+                ) : <span>None</span>}
+              </div>
+            </Form.Group>
+            <Form.Group className="mb-3 form-group">
+              <Form.Label>Status</Form.Label>
+              <Form.Select required type="select" name="status" onChange={handleChange} disabled={ticket.author !== user.id} >
+                <option>Select One</option>
+                <option value="unassigned" selected={ticket.status === "unassigned"}>
+                  Unassigned
                 </option>
-              )}
-            </Form.Select>
-          </Form.Group>
-          <Form.Group className="mb-3 form-group">
-            <Form.Label>Selected Assignees</Form.Label>
-            <div className="border rounded bg-white">
-              {selectedAssignees.length ? selectedAssignees.map((assignee) =>
-                <div className="badge bg-primary me-1">
-                  {assignees.find((item) => item._id === assignee).fullName}
-                  <span
-                    className="btn-cancel"
-                    onClick={() => setSelectedAssignees(selectedAssignees.filter((item) => item !== assignee))}
-                  >
-                    &times;
-                  </span>
-                </div>
-              ) : <span>None</span>}
-            </div>
-          </Form.Group>
-          <Form.Group className="mb-3 form-group">
-            <Form.Label>Status</Form.Label>
-            <Form.Select required type="select" name="status" onChange={handleChange} disabled={ticket.author !== user.id} >
-              <option>Select One</option>
-              <option value="unassigned" selected={ticket.status === "unassigned"}>
-                Unassigned
-              </option>
-              <option value="awaiting-feedback" selected={ticket.status === "awaiting-feedback"}>
-                Awaiting Feedback
-              </option>
-              <option value="complete" selected={ticket.status === "complete"}>
-                Complete
-              </option>
-            </Form.Select>
-          </Form.Group>
-          <Form.Group className="mb-3 form-group">
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              as="textarea"
-              placeholder="Leave a comment here"
-              name="description"
-              value={ticket.description}
-              style={{ height: "100px" }}
-              onChange={handleChange}
-              disabled={ticket.author !== user.id}
-            />
-          </Form.Group>
-          {
-            (ticket.author === user.id) ? <Button className="form-control mt-3 button" type="submit">
-              Update </Button> : <Button className="form-control mt-3 button" type="submit" disabled>Update</Button>
-          }
-        </Form>
-      </div>
-      <div className="comment-section d-flex flex-column gap-2 border-start rounded">
-        <h5>Comments</h5>
-        {ticket.comments?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-          .filter((comment) => !comment.parentId).map((comment) =>
-            <div className="rounded comment-item">
-              <CommentItem key={comment._id} comment={comment} fetchTicket={fetchTicket} />
-            </div>
-          )}
-      </div>
-      <div className="comment-box">
-        <CommentInput commentInput={commentInput} change={(e) => setCommentInput(e.target.value)} addComment={addComment} />
-      </div>
+                <option value="awaiting-feedback" selected={ticket.status === "awaiting-feedback"}>
+                  Awaiting Feedback
+                </option>
+                <option value="complete" selected={ticket.status === "complete"}>
+                  Complete
+                </option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3 form-group">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                placeholder="Leave a comment here"
+                name="description"
+                value={ticket.description}
+                style={{ height: "100px" }}
+                onChange={handleChange}
+                disabled={ticket.author !== user.id}
+              />
+            </Form.Group>
+            {
+              (ticket.author === user.id) ? <Button className="form-control mt-3 button" type="submit">
+                Update </Button> : <Button className="form-control mt-3 button" type="submit" disabled>Update</Button>
+            }
+          </Form>
+        </div>
+        <div className="comment-section d-flex flex-column gap-2 border-start rounded">
+          <h5>Comments</h5>
+          {ticket.comments?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .filter((comment) => !comment.parentId).map((comment) =>
+              <div className="rounded comment-item">
+                <CommentItem key={comment._id} comment={comment} fetchTicket={fetchTicket} />
+              </div>
+            )}
+        </div>
+        <div className="comment-box">
+          <CommentInput commentInput={commentInput} change={(e) => setCommentInput(e.target.value)} addComment={addComment} />
+        </div>
 
-      <CustomToaster />
+        <CustomToaster />
+      </div>
 
     </AppLayout>
   );
