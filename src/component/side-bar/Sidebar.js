@@ -12,17 +12,17 @@ export default function Sidebar() {
         </Navbar.Brand>
         <ul>
           <li>
-            <LinkContainer to="/dashboard" className="text-white">
+            <LinkContainer to="/dashboard">
               <Nav.Link>Dashboard</Nav.Link>
             </LinkContainer>
           </li>
           <li>
-            <LinkContainer to="/tickets" className="text-white">
+            <LinkContainer to="/tickets">
               <Nav.Link>Tickets</Nav.Link>
             </LinkContainer>
           </li>
           <li>
-            <LinkContainer to="/profile" className="text-white">
+            <LinkContainer to="/profile">
               <Nav.Link>Profile</Nav.Link>
             </LinkContainer>
           </li>
