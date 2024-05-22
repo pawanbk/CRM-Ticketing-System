@@ -2,11 +2,9 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import Offcanvas from "react-bootstrap/Offcanvas";
 import "./Navbar.css";
 import { BoxArrowLeft } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
-import { LinkContainer } from "react-router-bootstrap";
 import UserService from "../../api/UserService";
 
 export default function CustomNavbar() {
