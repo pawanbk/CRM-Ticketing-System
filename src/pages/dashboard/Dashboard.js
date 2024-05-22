@@ -51,8 +51,8 @@ export default function Dashboard() {
   }, []);
   return (
     <AppLayout>
-      <div className="d-flex justify-center align-items-center flex-column">
-        <Breadcrumb>
+      <div className="wrapper">
+        <Breadcrumb className="d-flex justify-center">
           <Breadcrumb.Item active>Dashboard</Breadcrumb.Item>
         </Breadcrumb>
         <div className="row">

@@ -12,8 +12,8 @@ export default function Profile() {
   const { user } = useAuthStore();
   return (
     <AppLayout>
-      <div className="d-flex flex-column align-items-center">
-        <Breadcrumb>
+      <div className="wrapper">
+        <Breadcrumb className="d-flex justify-center">
           <LinkContainer to="/dashboard">
             <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
           </LinkContainer>

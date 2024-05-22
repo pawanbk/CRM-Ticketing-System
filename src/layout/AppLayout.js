@@ -4,6 +4,7 @@ import "./AppLayout.css";
 import io from "socket.io-client";
 import { useAuthStore } from "../store.tsx";
 import Notification from "../shared/Notification.jsx";
+import Sidebar from "../component/side-bar/Sidebar.js";
 
 const socket = io("http://localhost:3001");
 
@@ -37,7 +38,10 @@ export default function AppLayout({ children }) {
     <>
       <CustomNav />
       <Notification notification={notification} />
-      <main>{children}</main>
+      <div className="app-layout">
+        <Sidebar />
+        <div className="main-content">{children}</div>
+      </div>
     </>
   );
 }
