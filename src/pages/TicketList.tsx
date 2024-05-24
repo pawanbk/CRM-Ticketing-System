@@ -46,7 +46,6 @@ export default function TicketList() {
 
   return (
     <AppLayout>
-      <div className="wrapper d-flex align-items-center flex-column">
         <Breadcrumb className="d-flex justify-center">
           <LinkContainer to="/dashboard">
             <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
@@ -82,7 +81,6 @@ export default function TicketList() {
         </table>
         <AddTicket show={modalShow} onHide={() => setModalShow(false)} loadTickets={() => fetchTickets()} toaster={notification} />
         <CustomToaster />
-      </div>
     </AppLayout>
   );
 }

@@ -10,6 +10,16 @@
     color: #fff;
 }
 
+.sidebar ul li a{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    padding-left: 20px;
+}
+.sidebar ul li a .bi{
+    font-size: 20px;
+}
 .sidebar ul li:hover{
     background-color: #eceef7;
     color:#111a45 !important;

@@ -10,6 +10,8 @@ html, body{
     margin:0;
     padding:0;
     font-family: 'Roboto', sans-serif;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 body{
@@ -18,6 +20,7 @@ body{
     font-size:15px;
     background:#edeef7 !important;
 }
+
 
 .text-color-primary{
     color: var(--primary) !important;
@@ -76,7 +79,11 @@ tr.unassigned > td{
     background: #f9d7da;
 }
 
-
+.disabled{
+    pointer-events: none;
+    /* opacity: 0.5; */
+    background-color: #e9ecef !important;
+}
   
 @keyframes loadingBox {
     0%{
