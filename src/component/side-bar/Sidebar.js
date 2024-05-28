@@ -2,6 +2,7 @@ import React from "react";
 import "./Sidebar.css";
 import { Navbar, Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { ListTask, PersonFill, Speedometer2 } from "react-bootstrap-icons";
 
 export default function Sidebar() {
   return (
@@ -13,17 +14,25 @@ export default function Sidebar() {
         <ul>
           <li>
             <LinkContainer to="/dashboard">
-              <Nav.Link>Dashboard</Nav.Link>
+              <Nav.Link>
+                <Speedometer2></Speedometer2>Dashboard
+              </Nav.Link>
             </LinkContainer>
           </li>
           <li>
             <LinkContainer to="/tickets">
-              <Nav.Link>Tickets</Nav.Link>
+              <Nav.Link>
+                <ListTask />
+                Tickets
+              </Nav.Link>
             </LinkContainer>
           </li>
           <li>
             <LinkContainer to="/profile">
-              <Nav.Link>Profile</Nav.Link>
+              <Nav.Link>
+                <PersonFill />
+                Profile
+              </Nav.Link>
             </LinkContainer>
           </li>
         </ul>

@@ -25,12 +25,12 @@ table{
     min-width: 1000px;
 }
 
-.form-control{
+.topbar .form-control{
     width:300px!important;
     height:35px;
 }
 
-.form-select{
+.topbar .form-select{
     width: 200px !important;
     height:35px;
 }

@@ -3,12 +3,15 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import "./Navbar.css";
-import { BoxArrowLeft } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import UserService from "../../api/UserService";
+import { capitalize } from "lodash";
+import { useAuthStore } from "../../store.tsx";
+import { PersonCircle, PersonFill, PersonSquare } from "react-bootstrap-icons";
 
 export default function CustomNavbar() {
   const navigate = useNavigate();
+  const { user } = useAuthStore();
   const logout = async () => {
     try {
       if (await UserService.logout()) {
@@ -24,7 +27,7 @@ export default function CustomNavbar() {
         <Nav></Nav>
         <Nav>
           <Nav.Link>
-            <BoxArrowLeft />
+            <PersonCircle style={{fontSize:'30px', color:'#111a45'}}/>
           </Nav.Link>
         </Nav>
       </Container>
