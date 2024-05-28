@@ -94,9 +94,9 @@ export default function TicketDetail() {
   }
 
   const fetchAssignees = () => {
-    UserService.assignees().then((res) => {
+    UserService.assignees().then(async (res) => {
       if (res.data?.success === true) {
-        setAssignees(res.data.assignees.map((assignee) => {
+        setAssignees(await res.data.assignees.map((assignee) => {
           return { _id: assignee._id, fullName: assignee.firstName + " " + assignee.lastName }
         }));
       }
@@ -139,7 +139,7 @@ export default function TicketDetail() {
               <option value="">Select</option>
               {assignees?.map((assignee) =>
                 <option value={assignee._id} >
-                  {assignee.fullName}
+                  {assignee?.fullName}
                 </option>
               )}
             </Form.Select>
@@ -149,7 +149,7 @@ export default function TicketDetail() {
             <div className="border rounded bg-white">
               {selectedAssignees.length ? selectedAssignees.map((assignee) =>
                 <div className="badge bg-primary me-1">
-                  {assignees.find((item) => item._id === assignee).fullName}
+                  {assignees.find((item) => item._id === assignee)?.fullName}
                   <span
                     className="btn-cancel"
                     onClick={() => setSelectedAssignees(selectedAssignees.filter((item) => item !== assignee))}
