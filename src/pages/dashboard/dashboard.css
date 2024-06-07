@@ -1,9 +1,14 @@
 .grid{
     display:grid;
     grid-template-columns: auto auto;
-    gap:1rem;
+    gap:.5rem 1rem;
 }
-
+.dashboard-content{
+    display:grid;
+    max-width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap:0.5rem 1rem;
+}
 .card-body a{
     text-decoration: none;
     color: var(--link);
@@ -13,13 +18,9 @@
     background-color: #fff;
 }
 
-@media only screen and (max-width:600px){
-    .grid{
-        grid-template-columns: auto;
+@media screen and (max-width: 768px){
+    .dashboard-content{
+        gap: 1rem;
     }
-
-    .card{
-        margin:0 auto;
-        width:100%;
-    }
+    
 }

@@ -37,14 +37,13 @@ export default function AppLayout({ children }) {
   });
   return (
     <>
-      <CustomNav />
-
+      <Sidebar />
       <div className="app-layout">
+        <CustomNav />
+        <div className="content">{children}</div>
+        <Footer />
         <Notification notification={notification} />
-        <Sidebar />
-        <div className="main-content">{children}</div>
       </div>
-      <Footer />
     </>
   );
 }
