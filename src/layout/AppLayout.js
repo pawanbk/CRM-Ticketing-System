@@ -17,19 +17,18 @@ export default function AppLayout({ children }) {
   });
 
   const [timer, setTimer] = useState(null);
-  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
     const newSocket = io("http://localhost:3001");
 
-    newSocket.emit("join", user?.id);
-    newSocket.on(`comment-received-${user?.id}`, (data) => {
+    newSocket.emit("join", user?._id);
+    newSocket.on(`comment-received-${user?._id}`, (data) => {
       if (data.user !== data.author) {
         setNotification({ message: data?.message, link: data?.link, show: true });
         setTimer(10);
       }
     });
-    newSocket.on(`reply-received-${user?.id}`, (data) => {
+    newSocket.on(`reply-received-${user?._id}`, (data) => {
       setNotification({ message: data?.message, link: data?.link, show: true });
       setTimer(10);
     });
@@ -45,7 +44,7 @@ export default function AppLayout({ children }) {
       clearTimeout(intervalId);
       newSocket.disconnect();
     };
-  }, [socket, timer]);
+  }, [timer]);
   return (
     <>
       <Sidebar />
@@ -54,7 +53,6 @@ export default function AppLayout({ children }) {
         <CustomNav />
         <div className="content">{children}</div>
         <Footer />
-        <Notification notification={notification} />
       </div>
     </>
   );

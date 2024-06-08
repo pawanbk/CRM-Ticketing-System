@@ -53,7 +53,7 @@ export default function TicketDetail() {
         socket.emit("comment-created",
           {
             type: 'comment', message: `${user?.username} commented on your ticket.`,
-            user: user?.id || "",
+            user: user?._id || "",
             ticketId: id,
             author: ticket.author,
             link: `/tickets/edit/${id}`
