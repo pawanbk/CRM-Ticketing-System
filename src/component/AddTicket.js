@@ -37,7 +37,7 @@ export default function AddTicket(props) {
   return (
     <Modal show={props.show} onHide={props.onHide} aria-labelledby="contained-modal-title-vcenter">
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Add New Ticket</Modal.Title>
+        <Modal.Title>Add New Ticket</Modal.Title>
       </Modal.Header>
       <Form onSubmit={handleSubmit}>
         <Modal.Body>

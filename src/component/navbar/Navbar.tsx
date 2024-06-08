@@ -5,9 +5,8 @@ import Navbar from "react-bootstrap/Navbar";
 import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 import UserService from "../../api/UserService";
-import { capitalize } from "lodash";
 import { useAuthStore } from "../../store.tsx";
-import { PersonCircle, PersonFill, PersonSquare } from "react-bootstrap-icons";
+import { PersonCircle } from "react-bootstrap-icons";
 
 export default function CustomNavbar() {
   const navigate = useNavigate();

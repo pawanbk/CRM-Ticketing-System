@@ -55,6 +55,13 @@ const TicketService = {
       return Promise.reject(error);
     }
   },
+  editComment: async (ticketId, commentId, newContent) => {
+    try {
+      return await axiosInstance.post("/ticket/comment/update", { ticketId, commentId, newContent });
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
 
   reply: async (ticketId, commentId, reply) => {
     try {
