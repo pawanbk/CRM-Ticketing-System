@@ -32,7 +32,7 @@ export default function TicketItem({ ticket, loadTickets, toaster }) {
         <Link to={"edit/" + ticket._id}>{ticket.title}</Link>
       </td>
       <td>
-        <Form.Select name="status" value={ticket.status} onChange={handleChange} disabled={ticket?.author !== user?.id}>
+        <Form.Select name="status" value={ticket.status} onChange={handleChange} disabled={ticket?.author !== user?._id}>
           <option value="unassigned">Unassigned</option>
           <option value="awaiting-feedback">Awaiting Feedback</option>
           <option value="complete">Complete</option>

@@ -36,7 +36,7 @@ const CommentItem = ({ comment, fetchTicket, eventEditClicked }) => {
                 <div className="d-flex gap-3">
                     <div className="profileInitials rounded-circle d-flex justify-content-center align-items-center">{capitalize(comment.author?.firstName).slice(0, 1) + capitalize(comment.author?.lastName).slice(0, 1)}</div>
                     <div className="d-flex flex-column gap-1">
-                        <span className="text-color-primary">{user.id === comment.author._id ? 'You' : capitalize(comment.author?.firstName)}</span>
+                        <span className="text-color-primary">{user._id === comment.author._id ? 'You' : capitalize(comment.author?.firstName)}</span>
                         <div className="comment-content">
                             <span style={{ wordBreak: 'break-word' }}>{comment?.content}</span>
                         </div>
@@ -46,7 +46,7 @@ const CommentItem = ({ comment, fetchTicket, eventEditClicked }) => {
                                     moment(comment?.createdAt).format('DD-MM-YY h:mm a')
                                     : capitalize(moment(comment?.createdAt).fromNow(true)) + ' ago'}
                             </span>
-                            {user.id !== comment.author._id ? <button className="btn-small" onClick={() => setIsReplying(true)}>Reply</button> : <button className="btn-small" onClick={()=>eventEditClicked(comment)}>Edit</button>}
+                            {user._id !== comment.author._id ? <button className="btn-small" onClick={() => setIsReplying(true)}>Reply</button> : <button className="btn-small" onClick={() => eventEditClicked(comment)}>Edit</button>}
                             {comment.replies?.length > 0 && (showChildNodes ?
                                 <button className="btn-small mx-2" onClick={() => setShowChildNodes(false)}>Hide Replies</button>
                                 : <button className="btn-small mx-2" onClick={() => setShowChildNodes(true)}>View Replies</button>)
@@ -62,7 +62,7 @@ const CommentItem = ({ comment, fetchTicket, eventEditClicked }) => {
             {
                 showChildNodes && comment.replies?.map((comment) =>
                     <div className="p-2 mb-1 border-top">
-                        <CommentItem key={comment.id} comment={comment} fetchTicket={fetchTicket} eventEditClicked={eventEditClicked}/>
+                        <CommentItem key={comment.id} comment={comment} fetchTicket={fetchTicket} eventEditClicked={eventEditClicked} />
                     </div>
                 )
             }
