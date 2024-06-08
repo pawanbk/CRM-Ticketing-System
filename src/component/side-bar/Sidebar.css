@@ -24,3 +24,8 @@
     background-color: #eceef7;
     color:#111a45 !important;
 }
+
+.sidebar ul li.active{
+    background-color: #eceef7;
+    color:#111a45 !important;
+}
