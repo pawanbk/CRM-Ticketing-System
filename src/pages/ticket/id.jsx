@@ -143,14 +143,14 @@ export default function TicketDetail() {
                     name="title"
                     value={ticket.title}
                     onChange={handleChange}
-                    disabled={ticket.author !== user.id} />
+                    disabled={ticket.author !== user._id} />
                 </Form.Group>
               </div>
 
               <div className="col-lg-6 col-sm-12">
                 <Form.Group className="mb-3 form-group">
                   <Form.Label>Status</Form.Label>
-                  <Form.Select required type="select" name="status" onChange={handleChange} disabled={ticket.author !== user.id} >
+                  <Form.Select required type="select" name="status" onChange={handleChange} disabled={ticket.author !== user._id} >
                     <option>Select One</option>
                     <option value="unassigned" selected={ticket.status === "unassigned"}>
                       Unassigned
@@ -169,7 +169,7 @@ export default function TicketDetail() {
               <div className="col-lg-6 col-sm-12">
                 <Form.Group className="mb-3 form-group">
                   <Form.Label>Assignee Picker</Form.Label>
-                  <Form.Select className="picker" type="select" name="assignees" onChange={addAssignees} disabled={ticket.author !== user.id} >
+                  <Form.Select className="picker" type="select" name="assignees" onChange={addAssignees} disabled={ticket.author !== user._id} >
                     <option value="">Select</option>
                     {assignees?.map((assignee) =>
                       <option value={assignee?._id} >
@@ -182,7 +182,7 @@ export default function TicketDetail() {
               <div className="col-lg-6 col-sm-12">
                 <Form.Group className="mb-3 form-group">
                   <Form.Label>Selected Assignees</Form.Label>
-                  <div className={`border rounded assignee-holder ${ticket.author !== user.id ? 'disabled' : ''}`}>
+                  <div className={`border rounded assignee-holder ${ticket.author !== user._id ? 'disabled' : ''}`}>
                     {selectedAssignees.length ? selectedAssignees.map((assignee) =>
                       <div className="badge bg-primary me-1">
                         {assignees.find((item) => item._id === assignee)?.fullName}
@@ -207,11 +207,11 @@ export default function TicketDetail() {
                 value={ticket.description}
                 style={{ height: "100px" }}
                 onChange={handleChange}
-                disabled={ticket.author !== user.id}
+                disabled={ticket.author !== user._id}
               />
             </Form.Group>
             {
-              (ticket.author === user.id) ? <Button className="form-control mt-3 button" type="submit">
+              (ticket.author === user._id) ? <Button className="form-control mt-3 button" type="submit">
                 Update </Button> : <Button className="form-control mt-3 button" type="submit" disabled>Update</Button>
             }
           </Form>
