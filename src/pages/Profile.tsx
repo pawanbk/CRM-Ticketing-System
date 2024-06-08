@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import AppLayout from "../layout/AppLayout";
@@ -31,8 +31,12 @@ export default function Profile() {
     const res = await UserService.update(inputs);
     if (res.status === 200 && res.data.success === true) {
       setUser(res.data.user);
+      setInputs({
+        displayName: res.data.user.username,
+        firstName: res.data.user.firstName,
+        lastName: res.data.user.lastName
+      })
       Notify("Profile updated successfully", "success");
-
     }
   }
   return (
