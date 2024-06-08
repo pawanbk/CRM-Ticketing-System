@@ -46,9 +46,6 @@ export default function CustomNavbar() {
       <Nav.Link>
         <PersonCircle style={{ fontSize: '30px', color: '#111a45' }} />
       </Nav.Link>
-      <Nav.Link>
-        <Nav><button onClick={logout}>logout</button></Nav>
-      </Nav.Link>
     </Navbar>
   );
 }
