@@ -9,10 +9,12 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./id.css";
 import CommentInput from "../../component/comment/CommentInput";
-import CommentItem from "../../component/comment/CommentItem";
+import CommentItem from "../../component/comment/CommentItem.tsx";
 import { useAuthStore } from "../../store.tsx";
 import io from "socket.io-client";
 import UserService from "../../api/UserService.js";
+import EditComment from "../../component/comment/edit-modal/EditComment.tsx";
+
 
 const socket = io("http://localhost:3001");
 
@@ -35,6 +37,13 @@ export default function TicketDetail() {
   const [assignees, setAssignees] = useState([]);
 
   const [selectedAssignees, setSelectedAssignees] = useState([]);
+  const [showEditCommentModal, setShowEditCommentModal] = useState(false);
+  const [commentInfo, setCommentInfo] = useState({});
+
+  const editCommentClicked = (comment) => {
+    setShowEditCommentModal(true);
+    setCommentInfo(comment);
+  }
 
   const addComment = async () => {
     try {
@@ -212,7 +221,7 @@ export default function TicketDetail() {
           {ticket.comments?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             .filter((comment) => !comment.parentId).map((comment) =>
               <div className="rounded comment-item">
-                <CommentItem key={comment._id} comment={comment} fetchTicket={fetchTicket} />
+                <CommentItem key={comment._id} comment={comment} fetchTicket={fetchTicket} eventEditClicked={editCommentClicked} />
               </div>
             )}
         </div>
@@ -220,8 +229,8 @@ export default function TicketDetail() {
           <CommentInput commentInput={commentInput} change={(e) => setCommentInput(e.target.value)} addComment={addComment} />
         </div>
       </div>
-
       <CustomToaster />
+      <EditComment setShow={setShowEditCommentModal} show={showEditCommentModal} comment={commentInfo} fetchTicket={fetchTicket} />
     </AppLayout >
   );
 }

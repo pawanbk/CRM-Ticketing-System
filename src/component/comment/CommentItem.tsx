@@ -1,8 +1,8 @@
-import { useState } from "react"
-import CommentInput from "./CommentInput"
+import React, { useState } from "react"
+import CommentInput from "./CommentInput.jsx"
 import { useParams } from "react-router-dom";
 import moment from "moment";
-import TicketService from "../../api/TicketServices";
+import TicketService from "../../api/TicketServices.js";
 import { capitalize } from "lodash";
 import io from "socket.io-client";
 import "./CommentItem.css";
@@ -10,11 +10,10 @@ import { useAuthStore } from "../../store.tsx";
 
 const socket = io("http://localhost:3001");
 
-
-const CommentItem = ({ comment, fetchTicket }) => {
+const CommentItem = ({ comment, fetchTicket, eventEditClicked }) => {
     const { id } = useParams();
     const secondsInDay = 24 * 60 * 60;
-    const timeDifference = Math.abs(new Date() - new Date(comment.createdAt)) / 1000;
+    const timeDifference = Math.abs(new Date().getTime() - new Date(comment.createdAt).getTime()) / 1000;
 
     const [isReplying, setIsReplying] = useState(false);
     const [showChildNodes, setShowChildNodes] = useState(false);
@@ -47,7 +46,7 @@ const CommentItem = ({ comment, fetchTicket }) => {
                                     moment(comment?.createdAt).format('DD-MM-YY h:mm a')
                                     : capitalize(moment(comment?.createdAt).fromNow(true)) + ' ago'}
                             </span>
-                            {user.id !== comment.author._id ? <button className="btn-small" onClick={() => setIsReplying(true)}>Reply</button> : <button className="btn-small" >Edit</button>}
+                            {user.id !== comment.author._id ? <button className="btn-small" onClick={() => setIsReplying(true)}>Reply</button> : <button className="btn-small" onClick={()=>eventEditClicked(comment)}>Edit</button>}
                             {comment.replies?.length > 0 && (showChildNodes ?
                                 <button className="btn-small mx-2" onClick={() => setShowChildNodes(false)}>Hide Replies</button>
                                 : <button className="btn-small mx-2" onClick={() => setShowChildNodes(true)}>View Replies</button>)
@@ -63,7 +62,7 @@ const CommentItem = ({ comment, fetchTicket }) => {
             {
                 showChildNodes && comment.replies?.map((comment) =>
                     <div className="p-2 mb-1 border-top">
-                        <CommentItem key={comment.id} comment={comment} fetchTicket={fetchTicket} />
+                        <CommentItem key={comment.id} comment={comment} fetchTicket={fetchTicket} eventEditClicked={eventEditClicked}/>
                     </div>
                 )
             }
