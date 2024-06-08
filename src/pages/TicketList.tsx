@@ -46,26 +46,18 @@ export default function TicketList() {
 
   return (
     <AppLayout>
-      <Breadcrumb className="d-flex justify-center">
-        <LinkContainer to="/dashboard">
-          <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
-        </LinkContainer>
-        <Breadcrumb.Item active>Tickets</Breadcrumb.Item>
-        <Breadcrumb.Item active>List</Breadcrumb.Item>
-      </Breadcrumb>
-      <div className="content">
-        <div className="topbar d-flex flex-column mb-3 gap-2">
-          <div className="d-flex justify-content-between">
-            <Form.Control placeholder="Search.." onChange={addFilters} name="title" value={selectedFilter?.title} />
-            <Button className="customBtn" onClick={() => setModalShow(true)}>
-              ADD
-              <PlusCircle />
-            </Button>
-          </div>
-          <div className="d-flex flex-column gap-2">
-            <div className="filters">Filter by</div>
-            <Form.Label>Status</Form.Label>
-            <FormSelect style={{ width: "20%" }} name="status" value={selectedFilter.status} onChange={addFilters}>
+        <Breadcrumb className="d-flex justify-center">
+          <LinkContainer to="/dashboard">
+            <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+          </LinkContainer>
+          <Breadcrumb.Item active>Tickets</Breadcrumb.Item>
+          <Breadcrumb.Item active>List</Breadcrumb.Item>
+        </Breadcrumb>
+        <div className="topbar d-flex justify-content-between align-items-center">
+          <Form.Control placeholder="Search.." onChange={addFilters} name="title" value={selectedFilter?.title} />
+          <div className="d-flex gap-3 align-items-center">
+            <button className="customBtn" onClick={() => setModalShow(true)}>New</button>
+            <FormSelect style={{ width: "30%" }} name="status" value={selectedFilter.status} onChange={addFilters}>
               <option value="all">All</option>
               <option value="unassigned">Unassigned</option>
               <option value="awaiting-feedback">Awaiting Feedback</option>
@@ -89,7 +81,6 @@ export default function TicketList() {
         </table>
         <AddTicket show={modalShow} onHide={() => setModalShow(false)} loadTickets={() => fetchTickets()} toaster={notification} />
         <CustomToaster />
-      </div>
     </AppLayout>
   );
 }

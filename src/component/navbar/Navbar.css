@@ -1,25 +1,15 @@
-.primary{
-    color:#fff !important;
-    background:var(--primary)!important;
+.top-nav{
+    margin-left: 150px;
+    border-radius: 5px;
+    height: 40px;
+    position: fixed !important;
+    background: #fff;
+    font-size: 17px;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 999;
 }
-
-.icon{
-    
-    font-size:30px;
-}
-.icon-btn{
-    display:flex;
-    flex-direction: row;
-    align-items: center;
-    gap:10px;
-}
-
-
-.hidden{
-    display: hidden;
-}
-
-
 
 @media only screen and (max-width:600px) {
     .hidden{

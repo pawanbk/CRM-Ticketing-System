@@ -1,17 +1,11 @@
 .profileInitials{
     background: #5d5f84;
     color: #fff;
-    min-width: 50px;
-    height:50px;
+    min-width: 35px;
+    height: 35px;
 }
 
 .text-color-primary, button{
     color:#5d5f84;
     font-weight: bold;
-}
-
-.comment-content{
-    background-color:#e7ecee;
-    max-width: 200px;
-    padding:.5rem 1rem ;
 }

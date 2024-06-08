@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import CustomNav from "../component/navbar/Navbar";
+import CustomNav from "../component/navbar/Navbar.tsx";
 import "./AppLayout.css";
 import io from "socket.io-client";
 import { useAuthStore } from "../store.tsx";
 import Notification from "../shared/Notification.jsx";
+import Sidebar from "../component/side-bar/Sidebar.js";
+import Footer from "../component/footer/Footer.tsx";
 
 export default function AppLayout({ children }) {
   const { user } = useAuthStore();
@@ -48,7 +50,12 @@ export default function AppLayout({ children }) {
     <>
       <CustomNav />
       {timer && <Notification notification={notification} />}
-      <main>{children}</main>
+      <div className="app-layout">
+        <Notification notification={notification} />
+        <Sidebar />
+        <div className="main-content">{children}</div>
+      </div>
+      <Footer />
     </>
   );
 }

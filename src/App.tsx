@@ -15,7 +15,6 @@ import PageNotFound from "./pages/404/404.tsx";
 
 function App() {
   return (
-    <div className="App">
       <Router>
         <Routes>
           <Route path="/" element={<GuestRoute />}>
@@ -39,7 +38,6 @@ function App() {
           <Route path="*" element={ <PageNotFound />} />
         </Routes>
       </Router>
-    </div>
   );
 }
 

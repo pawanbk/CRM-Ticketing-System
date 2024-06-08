@@ -6,17 +6,32 @@
     --dangerBg: #fff8f4;
     --success:#18864b;
 }
+html, body{
+    margin:0;
+    padding:0;
+    font-family: 'Roboto', sans-serif;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+    font-size:15px;
+    background:#edeef7 !important;
+}
+
 
 .text-color-primary{
     color: var(--primary) !important;
 }
 
-td>a{
+td > a{
     text-decoration: none;
 }
-body{
-    font-size:15px;
-    background:#edeef7 !important;
+
+.wrapper{
+    height: calc(100vh - 40px);
 }
 
 .button{
@@ -64,7 +79,11 @@ tr.unassigned > td{
     background: #f9d7da;
 }
 
-
+.disabled{
+    pointer-events: none;
+    /* opacity: 0.5; */
+    background-color: #e9ecef !important;
+}
   
 @keyframes loadingBox {
     0%{

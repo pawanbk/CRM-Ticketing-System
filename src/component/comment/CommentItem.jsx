@@ -38,7 +38,7 @@ const CommentItem = ({ comment, fetchTicket }) => {
                     <div className="profileInitials rounded-circle d-flex justify-content-center align-items-center">{capitalize(comment.author?.firstName).slice(0, 1) + capitalize(comment.author?.lastName).slice(0, 1)}</div>
                     <div className="d-flex flex-column gap-1">
                         <span className="text-color-primary">{user.id === comment.author._id ? 'You' : capitalize(comment.author?.firstName)}</span>
-                        <div className="comment-content border rounded" style={{ width: '220px' }}>
+                        <div className="comment-content">
                             <span style={{ wordBreak: 'break-word' }}>{comment?.content}</span>
                         </div>
                         <div className="pb-1">
