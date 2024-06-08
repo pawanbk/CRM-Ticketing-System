@@ -15,8 +15,6 @@ html, body{
     box-sizing: border-box;
 }
 body{
-    width: 100vw;
-    height: 100vh;
     font-size:15px;
     background:#edeef7 !important;
 }
