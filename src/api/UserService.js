@@ -29,6 +29,17 @@ const UserService = {
     });
   },
 
+  update: (data) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await axiosInstance.patch("/user", data);
+        resolve(res);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
+
   assignees: () => {
     return new Promise(async (resolve, reject) => {
       try {
