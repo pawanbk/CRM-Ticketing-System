@@ -1,4 +1,9 @@
-
+.wrapper .customBtn{
+    width: auto;
+    font-size: 13px;
+    padding: 0 .5rem;
+    float: right;
+}
 
 @media only screen and (max-width:600px) {
     .card{

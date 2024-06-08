@@ -5,13 +5,15 @@ import { InitialAuthState } from "./shared/interface";
 const initialState: InitialAuthState = {
   isLoggedIn: false,
   user: {
-    _id:'',
-    email:'',
-    username:''
+    _id: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    username: ''
   },
 };
 
-export const useAuthStore = create (
+export const useAuthStore = create(
   persist(
     (set) => ({
       ...initialState,

@@ -9,10 +9,12 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./id.css";
 import CommentInput from "../../component/comment/CommentInput";
-import CommentItem from "../../component/comment/CommentItem";
+import CommentItem from "../../component/comment/CommentItem.tsx";
 import { useAuthStore } from "../../store.tsx";
 import io from "socket.io-client";
 import UserService from "../../api/UserService.js";
+import EditComment from "../../component/comment/edit-modal/EditComment.tsx";
+
 
 const socket = io("http://localhost:3001");
 
@@ -35,6 +37,13 @@ export default function TicketDetail() {
   const [assignees, setAssignees] = useState([]);
 
   const [selectedAssignees, setSelectedAssignees] = useState([]);
+  const [showEditCommentModal, setShowEditCommentModal] = useState(false);
+  const [commentInfo, setCommentInfo] = useState({});
+
+  const editCommentClicked = (comment) => {
+    setShowEditCommentModal(true);
+    setCommentInfo(comment);
+  }
 
   const addComment = async () => {
     try {
@@ -94,9 +103,9 @@ export default function TicketDetail() {
   }
 
   const fetchAssignees = () => {
-    UserService.assignees().then((res) => {
+    UserService.assignees().then(async (res) => {
       if (res.data?.success === true) {
-        setAssignees(res.data.assignees.map((assignee) => {
+        setAssignees(await res.data.assignees.map((assignee) => {
           return { _id: assignee._id, fullName: assignee.firstName + " " + assignee.lastName }
         }));
       }
@@ -134,14 +143,14 @@ export default function TicketDetail() {
                     name="title"
                     value={ticket.title}
                     onChange={handleChange}
-                    disabled={ticket.author !== user.id} />
+                    disabled={ticket.author !== user._id} />
                 </Form.Group>
               </div>
 
               <div className="col-lg-6 col-sm-12">
                 <Form.Group className="mb-3 form-group">
                   <Form.Label>Status</Form.Label>
-                  <Form.Select required type="select" name="status" onChange={handleChange} disabled={ticket.author !== user.id} >
+                  <Form.Select required type="select" name="status" onChange={handleChange} disabled={ticket.author !== user._id} >
                     <option>Select One</option>
                     <option value="unassigned" selected={ticket.status === "unassigned"}>
                       Unassigned
@@ -160,7 +169,7 @@ export default function TicketDetail() {
               <div className="col-lg-6 col-sm-12">
                 <Form.Group className="mb-3 form-group">
                   <Form.Label>Assignee Picker</Form.Label>
-                  <Form.Select className="picker" type="select" name="assignees" onChange={addAssignees} disabled={ticket.author !== user.id} >
+                  <Form.Select className="picker" type="select" name="assignees" onChange={addAssignees} disabled={ticket.author !== user._id} >
                     <option value="">Select</option>
                     {assignees?.map((assignee) =>
                       <option value={assignee?._id} >
@@ -173,7 +182,7 @@ export default function TicketDetail() {
               <div className="col-lg-6 col-sm-12">
                 <Form.Group className="mb-3 form-group">
                   <Form.Label>Selected Assignees</Form.Label>
-                  <div className={`border rounded assignee-holder ${ticket.author !== user.id ? 'disabled' : ''}`}>
+                  <div className={`border rounded assignee-holder ${ticket.author !== user._id ? 'disabled' : ''}`}>
                     {selectedAssignees.length ? selectedAssignees.map((assignee) =>
                       <div className="badge bg-primary me-1">
                         {assignees.find((item) => item._id === assignee)?.fullName}
@@ -198,11 +207,11 @@ export default function TicketDetail() {
                 value={ticket.description}
                 style={{ height: "100px" }}
                 onChange={handleChange}
-                disabled={ticket.author !== user.id}
+                disabled={ticket.author !== user._id}
               />
             </Form.Group>
             {
-              (ticket.author === user.id) ? <Button className="form-control mt-3 button" type="submit">
+              (ticket.author === user._id) ? <Button className="form-control mt-3 button" type="submit">
                 Update </Button> : <Button className="form-control mt-3 button" type="submit" disabled>Update</Button>
             }
           </Form>
@@ -212,7 +221,7 @@ export default function TicketDetail() {
           {ticket.comments?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             .filter((comment) => !comment.parentId).map((comment) =>
               <div className="rounded comment-item">
-                <CommentItem key={comment._id} comment={comment} fetchTicket={fetchTicket} />
+                <CommentItem key={comment._id} comment={comment} fetchTicket={fetchTicket} eventEditClicked={editCommentClicked} />
               </div>
             )}
         </div>
@@ -220,8 +229,8 @@ export default function TicketDetail() {
           <CommentInput commentInput={commentInput} change={(e) => setCommentInput(e.target.value)} addComment={addComment} />
         </div>
       </div>
-
       <CustomToaster />
+      <EditComment setShow={setShowEditCommentModal} show={showEditCommentModal} comment={commentInfo} fetchTicket={fetchTicket} />
     </AppLayout >
   );
 }
