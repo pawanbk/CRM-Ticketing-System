@@ -48,14 +48,14 @@ export default function AppLayout({ children }) {
   }, [socket, timer]);
   return (
     <>
-      <CustomNav />
+      <Sidebar />
       {timer && <Notification notification={notification} />}
       <div className="app-layout">
+        <CustomNav />
+        <div className="content">{children}</div>
+        <Footer />
         <Notification notification={notification} />
-        <Sidebar />
-        <div className="main-content">{children}</div>
       </div>
-      <Footer />
     </>
   );
 }
