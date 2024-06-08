@@ -23,10 +23,10 @@ export default function CustomNavbar() {
   return (
     <Navbar className="top-nav primary">
       <Container>
-        <Nav></Nav>
+        <Nav><button onClick={logout}>logout</button></Nav>
         <Nav>
           <Nav.Link>
-            <PersonCircle style={{fontSize:'30px', color:'#111a45'}}/>
+            <PersonCircle style={{ fontSize: '30px', color: '#111a45' }} />
           </Nav.Link>
         </Nav>
       </Container>

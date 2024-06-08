@@ -103,9 +103,9 @@ export default function TicketDetail() {
   }
 
   const fetchAssignees = () => {
-    UserService.assignees().then((res) => {
+    UserService.assignees().then(async (res) => {
       if (res.data?.success === true) {
-        setAssignees(res.data.assignees.map((assignee) => {
+        setAssignees(await res.data.assignees.map((assignee) => {
           return { _id: assignee._id, fullName: assignee.firstName + " " + assignee.lastName }
         }));
       }
