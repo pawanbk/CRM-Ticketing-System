@@ -49,7 +49,7 @@ export default function Profile() {
       </Breadcrumb>
       <div className="wrapper h-auto w-full p-5 bg-white rounded">
         <strong>Edit Profile</strong>
-        <div className="grid pt-4">
+        <div className="grid-class pt-4">
           <Form.Group className="mb-3 form-group">
             <Form.Label>Email</Form.Label>
             <Form.Control defaultValue={user?.email} disabled />
@@ -59,7 +59,7 @@ export default function Profile() {
             <Form.Control required type="text" name="displayName" value={capitalize(inputs.displayName)} disabled />
           </Form.Group>
         </div>
-        <div className="grid">
+        <div className="grid-class">
           <Form.Group className="mb-3 form-group">
             <Form.Label>First name</Form.Label>
             <Form.Control required name="firstName" value={capitalize(inputs.firstName)} onChange={handleChange} />
