@@ -13,18 +13,18 @@ export default function Sidebar() {
         </Navbar.Brand>
         <ul>
           <li>
-            <NavLink to="/dashboard" activeClassName="active">
+            <NavLink to="/dashboard" className={({ isActive }) => (isActive ? "active" : "")}>
               <Speedometer2></Speedometer2>Dashboard
             </NavLink>
           </li>
           <li>
-            <NavLink to="/tickets" activeClassName="active">
+            <NavLink to="/tickets" className={({ isActive }) => (isActive ? "active" : "")}>
               <ListTask />
               Tickets
             </NavLink>
           </li>
           <li>
-            <NavLink to="/profile" activeClassName="active">
+            <NavLink to="/profile" className={({ isActive }) => (isActive ? "active" : "")}>
               <PersonFill />
               Profile
             </NavLink>
