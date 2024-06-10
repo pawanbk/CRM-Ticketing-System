@@ -15,29 +15,29 @@ import PageNotFound from "./pages/404/404.tsx";
 
 function App() {
   return (
-      <Router>
-        <Routes>
-          <Route path="/" element={<GuestRoute />}>
-            <Route path="/" element={<Landing />} />
-          </Route>
-          <Route path="/dashboard" element={<PrivateRoute />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Route>
-          <Route path="/tickets" element={<PrivateRoute />}>
-            <Route path="/tickets" element={<TicketList />} />
-          </Route>
-          <Route path="/tickets/edit/:id" element={<PrivateRoute />}>
-            <Route path="/tickets/edit/:id" element={<TicketDetail />} />
-          </Route>
-          <Route path="/profile" element={<PrivateRoute />}>
-            <Route path="/profile" element={<Profile />} />
-          </Route>
-          <Route path="/forget-password" element={<Forget />} />
-          <Route path="/reset-password" element={<Reset />} />
-          <Route path="/404" element={<PageNotFound />} />
-          <Route path="*" element={ <PageNotFound />} />
-        </Routes>
-      </Router>
+    <Router>
+      <Routes>
+        <Route path="/" element={<GuestRoute />}>
+          <Route path="/" element={<Landing />} />
+        </Route>
+        <Route path="/dashboard" element={<PrivateRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
+        <Route path="/tickets" element={<PrivateRoute />}>
+          <Route path="/tickets" element={<TicketList />} />
+        </Route>
+        <Route path="/tickets/edit/:id" element={<PrivateRoute />}>
+          <Route path="/tickets/edit/:id" element={<TicketDetail />} />
+        </Route>
+        <Route path="/profile" element={<PrivateRoute />}>
+          <Route path="/profile" element={<Profile />} />
+        </Route>
+        <Route path="/forget-password" element={<Forget />} />
+        <Route path="/reset-password" element={<Reset />} />
+        <Route path="/404" element={<PageNotFound />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </Router>
   );
 }
 

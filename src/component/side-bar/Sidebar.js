@@ -1,15 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Sidebar.css";
-import { Navbar, Nav } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import { Navbar } from "react-bootstrap";
 import { ListTask, PersonFill, Speedometer2 } from "react-bootstrap-icons";
+import { NavLink } from "react-router-dom";
 
 export default function Sidebar() {
-  const [active, setActive] = useState("dashboard");
-
-  const changeActive = (param) => {
-    setActive(param);
-  };
   return (
     <div className="sidebar">
       <Navbar className="d-flex flex-column">
@@ -17,28 +12,22 @@ export default function Sidebar() {
           TCRM
         </Navbar.Brand>
         <ul>
-          <li className={active === "dashboard" ? "active" : ""}>
-            <LinkContainer to="/">
-              <Nav.Link>
-                <Speedometer2></Speedometer2>Dashboard
-              </Nav.Link>
-            </LinkContainer>
+          <li>
+            <NavLink to="/dashboard" activeClassName="active">
+              <Speedometer2></Speedometer2>Dashboard
+            </NavLink>
           </li>
-          <li className={active === "tickets" ? "active" : ""}>
-            <LinkContainer to="/tickets" onClick={() => changeActive("tickets")}>
-              <Nav.Link>
-                <ListTask />
-                Tickets
-              </Nav.Link>
-            </LinkContainer>
+          <li>
+            <NavLink to="/tickets" activeClassName="active">
+              <ListTask />
+              Tickets
+            </NavLink>
           </li>
-          <li className={active === "profile" ? "active" : ""}>
-            <LinkContainer to="/profile" onClick={() => changeActive("profile")}>
-              <Nav.Link>
-                <PersonFill />
-                Profile
-              </Nav.Link>
-            </LinkContainer>
+          <li>
+            <NavLink to="/profile" activeClassName="active">
+              <PersonFill />
+              Profile
+            </NavLink>
           </li>
         </ul>
       </Navbar>
