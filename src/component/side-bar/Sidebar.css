@@ -5,9 +5,7 @@
 
 .sidebar ul li{
     margin-bottom: 20px;
-    padding: 10px 0;
     width: 150px;
-    color: #fff;
 }
 
 .sidebar ul li a{
@@ -15,17 +13,21 @@
     justify-content: flex-start;
     align-items: center;
     gap: 15px;
-    padding-left: 20px;
+    padding:10px 20px;
+    color: #fff;
+    text-decoration: none;
 }
 .sidebar ul li a .bi{
     font-size: 20px;
 }
-.sidebar ul li:hover{
+ .sidebar ul li a:hover{
     background-color: #eceef7;
-    color:#111a45 !important;
+    color: #111a45;
+
 }
 
-.sidebar ul li.active{
+.sidebar ul li a.active{
     background-color: #eceef7;
     color:#111a45 !important;
+   
 }
