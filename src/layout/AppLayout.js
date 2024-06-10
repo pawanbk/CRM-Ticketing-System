@@ -6,17 +6,19 @@ import { useAuthStore } from "../store.tsx";
 import Notification from "../shared/Notification.jsx";
 import Sidebar from "../component/side-bar/Sidebar.js";
 import Footer from "../component/footer/Footer.tsx";
+import { set } from "lodash";
 
 export default function AppLayout({ children }) {
   const { user } = useAuthStore();
 
-  const [notification, setNotification] = useState({
-    message: "",
-    link: "",
-    show: false,
-  });
+  const [notification, setNotification] = useState([]);
 
   const [timer, setTimer] = useState(null);
+  const [showNotificationModal, setShowNotificationModal] = useState(false);
+
+  const openNotificationModal = () => {
+    setShowNotificationModal(true);
+  };
 
   useEffect(() => {
     const newSocket = io("http://localhost:3001");
@@ -24,12 +26,12 @@ export default function AppLayout({ children }) {
     newSocket.emit("join", user?._id);
     newSocket.on(`comment-received-${user?._id}`, (data) => {
       if (data.user !== data.author) {
-        setNotification({ message: data?.message, link: data?.link, show: true });
+        setNotification([{ message: data?.message, link: data?.link, show: true }, ...notification]);
         setTimer(10);
       }
     });
     newSocket.on(`reply-received-${user?._id}`, (data) => {
-      setNotification({ message: data?.message, link: data?.link, show: true });
+      setNotification([{ message: data?.message, link: data?.link, show: true }, ...notification]);
       setTimer(10);
     });
 
@@ -48,9 +50,9 @@ export default function AppLayout({ children }) {
   return (
     <>
       <Sidebar />
-      {timer && <Notification notification={notification} />}
+      {showNotificationModal && <Notification notification={notification} setShowNotificationModal={setShowNotificationModal} />}
       <div className="app-layout">
-        <CustomNav />
+        <CustomNav notification={notification} openNotificationModal={openNotificationModal} />
         <div className="content">{children}</div>
         <Footer />
       </div>
