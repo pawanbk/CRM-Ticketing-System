@@ -50,12 +50,12 @@ export default function TicketDetail() {
       const res = await TicketService.comment(id, commentInput);
       if (res.data?.success === true) {
         fetchTicket();
-        socket.emit("comment-created",
+        socket.emit("sendNotification",
           {
-            type: 'comment', message: `${user?.username} commented on your ticket.`,
-            user: user?._id || "",
-            ticketId: id,
-            author: ticket.author,
+            type: 'comment',
+            message: `${user?.username} commented on your ticket.`,
+            from: user?._id || "",
+            to: ticket.author,
             link: `/tickets/edit/${id}`
           });
       }
