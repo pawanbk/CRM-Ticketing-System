@@ -46,41 +46,41 @@ export default function TicketList() {
 
   return (
     <AppLayout>
-        <Breadcrumb className="d-flex justify-center">
-          <LinkContainer to="/dashboard">
-            <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
-          </LinkContainer>
-          <Breadcrumb.Item active>Tickets</Breadcrumb.Item>
-          <Breadcrumb.Item active>List</Breadcrumb.Item>
-        </Breadcrumb>
-        <div className="topbar d-flex justify-content-between align-items-center">
-          <Form.Control placeholder="Search.." onChange={addFilters} name="title" value={selectedFilter?.title} />
-          <div className="d-flex gap-3 align-items-center">
-            <button className="customBtn" onClick={() => setModalShow(true)}>New</button>
-            <FormSelect style={{ width: "30%" }} name="status" value={selectedFilter.status} onChange={addFilters}>
-              <option value="all">All</option>
-              <option value="unassigned">Unassigned</option>
-              <option value="awaiting-feedback">Awaiting Feedback</option>
-              <option value="complete">Complete</option>
-            </FormSelect>
-          </div>
+      <Breadcrumb className="d-flex justify-center">
+        <LinkContainer to="/dashboard">
+          <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+        </LinkContainer>
+        <Breadcrumb.Item active>Tickets</Breadcrumb.Item>
+        <Breadcrumb.Item active>List</Breadcrumb.Item>
+      </Breadcrumb>
+      <div className="topbar d-flex justify-content-between align-items-center">
+        <Form.Control placeholder="Search.." onChange={addFilters} name="title" value={selectedFilter?.title} />
+        <div className="d-flex gap-3 align-items-center">
+          <button className="customBtn" onClick={() => setModalShow(true)}>New</button>
+          <FormSelect style={{ width: "30%" }} name="status" value={selectedFilter.status} onChange={addFilters}>
+            <option value="all">All</option>
+            <option value="unassigned">Unassigned</option>
+            <option value="awaiting-feedback">Awaiting Feedback</option>
+            <option value="complete">Complete</option>
+          </FormSelect>
         </div>
-        <table className="table table-bordered">
-          <thead>
-            <tr>
-              {columns.map((col, index) => (
-                <th key={index}>{col}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {tickets?.map((ticket) => (
-              <TicketItem key={ticket._id} ticket={ticket} loadTickets={() => fetchTickets()} toaster={notification} />
+      </div>
+      <table className="table table-bordered" style={{ overflowX: 'auto' }}>
+        <thead>
+          <tr>
+            {columns.map((col, index) => (
+              <th key={index}>{col}</th>
             ))}
-          </tbody>
-        </table>
-        <AddTicket show={modalShow} onHide={() => setModalShow(false)} loadTickets={() => fetchTickets()} toaster={notification} />
-        <CustomToaster />
-    </AppLayout>
+          </tr>
+        </thead>
+        <tbody>
+          {tickets?.map((ticket) => (
+            <TicketItem key={ticket._id} ticket={ticket} loadTickets={() => fetchTickets()} toaster={notification} />
+          ))}
+        </tbody>
+      </table>
+      <AddTicket show={modalShow} onHide={() => setModalShow(false)} loadTickets={() => fetchTickets()} toaster={notification} />
+      <CustomToaster />
+    </AppLayout >
   );
 }
