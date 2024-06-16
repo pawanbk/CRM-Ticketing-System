@@ -50,12 +50,12 @@ export default function TicketDetail() {
       const res = await TicketService.comment(id, commentInput);
       if (res.data?.success === true) {
         fetchTicket();
-        socket.emit("comment-created",
+        socket.emit("sendNotification",
           {
-            type: 'comment', message: `${user?.username} commented on your ticket.`,
-            user: user?._id || "",
-            ticketId: id,
-            author: ticket.author,
+            type: 'comment',
+            message: `${user?.username} commented on your ticket.`,
+            from: user?._id || "",
+            to: ticket.author,
             link: `/tickets/edit/${id}`
           });
       }
@@ -150,15 +150,15 @@ export default function TicketDetail() {
               <div className="col-lg-6 col-sm-12">
                 <Form.Group className="mb-3 form-group">
                   <Form.Label>Status</Form.Label>
-                  <Form.Select required type="select" name="status" onChange={handleChange} disabled={ticket.author !== user._id} >
+                  <Form.Select required type="select" name="status" onChange={handleChange} disabled={ticket.author !== user._id} value={ticket.status}>
                     <option>Select One</option>
-                    <option value="unassigned" selected={ticket.status === "unassigned"}>
+                    <option value="unassigned">
                       Unassigned
                     </option>
-                    <option value="awaiting-feedback" selected={ticket.status === "awaiting-feedback"}>
+                    <option value="awaiting-feedback">
                       Awaiting Feedback
                     </option>
-                    <option value="complete" selected={ticket.status === "complete"}>
+                    <option value="complete">
                       Complete
                     </option>
                   </Form.Select>
@@ -169,10 +169,10 @@ export default function TicketDetail() {
               <div className="col-lg-6 col-sm-12">
                 <Form.Group className="mb-3 form-group">
                   <Form.Label>Assignee Picker</Form.Label>
-                  <Form.Select className="picker" type="select" name="assignees" onChange={addAssignees} disabled={ticket.author !== user._id} >
+                  <Form.Select className="picker" type="select" name="assignees" onChange={addAssignees} disabled={ticket.author !== user._id} value="">
                     <option value="">Select</option>
                     {assignees?.map((assignee) =>
-                      <option value={assignee?._id} >
+                      <option key={assignee?._id} value={assignee?._id} >
                         {assignee?.fullName}
                       </option>
                     )}
@@ -183,8 +183,8 @@ export default function TicketDetail() {
                 <Form.Group className="mb-3 form-group">
                   <Form.Label>Selected Assignees</Form.Label>
                   <div className={`border rounded assignee-holder ${ticket.author !== user._id ? 'disabled' : ''}`}>
-                    {selectedAssignees.length ? selectedAssignees.map((assignee) =>
-                      <div className="badge bg-primary me-1">
+                    {selectedAssignees.length ? selectedAssignees.map((assignee, index) =>
+                      <div key={index} className="badge bg-primary me-1">
                         {assignees.find((item) => item._id === assignee)?.fullName}
                         <span
                           className="btn-cancel"
@@ -220,8 +220,8 @@ export default function TicketDetail() {
           <h5>All Comments</h5>
           {ticket.comments?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             .filter((comment) => !comment.parentId).map((comment) =>
-              <div className="rounded comment-item">
-                <CommentItem key={comment._id} comment={comment} fetchTicket={fetchTicket} eventEditClicked={editCommentClicked} />
+              <div key={comment._id} className="rounded comment-item">
+                <CommentItem comment={comment} fetchTicket={fetchTicket} eventEditClicked={editCommentClicked} />
               </div>
             )}
         </div>
