@@ -60,7 +60,7 @@ export default function AppLayout({ children }) {
       clearTimeout(intervalId);
       socket.disconnect();
     };
-  });
+  }, []);
   return (
     <>
       <Sidebar />
