@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { ArrowLeftCircleFill } from "react-bootstrap-icons";
 import axios from "axios";
-import AuthLayout from "../../layout/AuthLayout";
+import AuthLayout from "../../layout/AuthLayout.js";
 import CustomAlert from "../../shared/CustomAlert.tsx";
 import "./Forget.css";
 import LoadingAnimation from "../../shared/LoadingAnimation.tsx";
@@ -63,7 +63,7 @@ export default function Forget() {
                   Enter the email address you used during the registration. Then we'll email a link to this address.
                 </Form.Text>
               </Form.Group>
-              <Button className="form-control mt-3 button" type="submit" disabled={loading && "disabled"}>
+              <Button className="form-control mt-3 button" type="submit" disabled={loading}>
                 {loading ? <LoadingAnimation /> : "Send Link"}
               </Button>
             </Form>

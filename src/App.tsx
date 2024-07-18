@@ -1,8 +1,8 @@
 import React from "react";
 import "./App.css";
-import Forget from "./component/auth/Forget";
+import Forget from "./component/auth/Forget.tsx";
 import Reset from "./component/auth/ResetPassword.jsx";
-import Dashboard from "./pages/dashboard/Dashboard.js";
+import Dashboard from "./pages/dashboard/Dashboard.tsx";
 import Landing from "./pages/Landing.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
