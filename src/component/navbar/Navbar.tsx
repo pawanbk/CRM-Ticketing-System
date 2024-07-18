@@ -7,7 +7,6 @@ import UserService from "../../api/UserService";
 import { useAuthStore } from "../../store.tsx";
 import { PersonCircle } from "react-bootstrap-icons";
 import { BellFill } from "react-bootstrap-icons";
-import NotificationBadge, { Effect } from "react-notification-badge";
 
 export default function CustomNavbar(props) {
   const navigate = useNavigate();
@@ -47,7 +46,6 @@ export default function CustomNavbar(props) {
       <div className="d-flex gap-4 align-items-center">
         <Nav onClick={() => props.openNotificationModal()}>
           <BellFill style={{ fontSize: '35px', color: '#111a45' }} />
-          <NotificationBadge count={props.notification.length} effect={Effect.SCALE} />
         </Nav>
         <Nav.Link>
           <PersonCircle style={{ fontSize: '20px', color: '#111a45' }} />
