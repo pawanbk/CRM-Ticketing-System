@@ -11,7 +11,7 @@ import "./Forget.css";
 import LoadingAnimation from "../../shared/LoadingAnimation.tsx";
 
 export default function Forget() {
-  const API_URL = "http://localhost:3001/v1/user/reset-password";
+  const API_URL = `${process.env.REACT_APP_API_URL}/user/reset-password`;
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
