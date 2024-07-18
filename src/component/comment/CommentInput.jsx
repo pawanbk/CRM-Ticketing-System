@@ -11,7 +11,7 @@ const CommentInput = (props) => {
                 name="commentInput"
                 value={props.commentInput}
                 onChange={props.change}
-                onKeyPress={(e) => e.key === 'Enter' && props.addComment()}
+                onKeyUp={(e) => e.key === 'Enter' && props.addComment()}
             />
             <div className="float-right  my-1">
                 {props.cancelBtn &&
