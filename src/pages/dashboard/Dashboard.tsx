@@ -1,3 +1,4 @@
+import React from "react";
 import AppLayout from "../../layout/AppLayout";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { Link } from "react-router-dom";
@@ -6,6 +7,12 @@ import "./dashboard.css";
 import TicketService from "../../api/TicketServices";
 import { ListGroup } from "react-bootstrap";
 
+export interface Ticket {
+  _id: number,
+  status: string,
+  title: string,
+  description: string
+}
 export default function Dashboard() {
   const [recentlyCreated, setRecentlyCreated] = useState([]);
   const [recentlyUpdated, setRecentlyUpdated] = useState([]);
@@ -22,9 +29,9 @@ export default function Dashboard() {
       if (data.success === true) {
         setTicketStats({
           total: data.tickets.length,
-          unassigned: data.tickets.filter((ticket) => ticket.status === "unassigned").length,
-          awaiting: data.tickets.filter((ticket) => ticket.status === "awaiting-feedback").length,
-          completed: data.tickets.filter((ticket) => ticket.status === "complete").length,
+          unassigned: data.tickets.filter((ticket: Ticket) => ticket.status === "unassigned").length,
+          awaiting: data.tickets.filter((ticket: Ticket) => ticket.status === "awaiting-feedback").length,
+          completed: data.tickets.filter((ticket: Ticket) => ticket.status === "complete").length,
         });
 
         setRecentlyCreated(data.tickets.slice(0, 6));
@@ -84,7 +91,7 @@ export default function Dashboard() {
           <div className="card-body">
             <ListGroup style={{ width: "100%" }}>
               {recentlyCreated &&
-                recentlyCreated.map((ticket) => (
+                recentlyCreated.map((ticket: Ticket) => (
                   <ListGroup.Item key={ticket._id}>
                     <Link to={"/tickets/edit/" + ticket._id}>{ticket.title}</Link>
                   </ListGroup.Item>
@@ -98,7 +105,7 @@ export default function Dashboard() {
           <div className="card-body">
             <ListGroup style={{ width: "100%" }}>
               {recentlyUpdated &&
-                recentlyUpdated.map((ticket) => (
+                recentlyUpdated.map((ticket: Ticket) => (
                   <ListGroup.Item key={ticket._id}>
                     <Link to={"/tickets/edit/" + ticket._id}>{ticket.title}</Link>
                   </ListGroup.Item>
