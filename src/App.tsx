@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Forget from "./component/auth/Forget.js";
+import Forget from "./component/auth/Forget";
 import Reset from "./component/auth/ResetPassword.jsx";
 import Dashboard from "./pages/dashboard/Dashboard.js";
 import Landing from "./pages/Landing.js";
