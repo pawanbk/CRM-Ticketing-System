@@ -5,7 +5,7 @@ import { useAuthStore } from "../store.tsx";
 
 const { logout } = useAuthStore.getState();
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3001/v1/",
+  baseURL: process.env.REACT_APP_API_URL,
 });
 
 axiosInstance.interceptors.request.use(
@@ -34,7 +34,7 @@ axiosInstance.interceptors.response.use(
       const refreshToken = AuthService.getRefreshToken();
       if (refreshToken && refreshToken.length > 0) {
         try {
-          const url = "http://localhost:3001/v1/token";
+          const url = process.env.REACT_APP_API_URL + 'token';
           const response = await axios.get(url, {
             headers: {
               Authorization: refreshToken,
