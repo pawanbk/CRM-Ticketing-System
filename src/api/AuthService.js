@@ -12,7 +12,7 @@ const AuthService = {
         }
         resolve(res.data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
         reject(error.response);
       }
     });
