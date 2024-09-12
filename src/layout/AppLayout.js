@@ -62,14 +62,12 @@ export default function AppLayout({ children }) {
     };
   });
   return (
-    <>
+    <div className="app-layout">
       <Sidebar />
       {showNotificationModal && <Notification notifications={notification} setShowNotificationModal={setShowNotificationModal} />}
-      <div className="app-layout">
-        <CustomNav notification={notification} openNotificationModal={openNotificationModal} />
-        <div className="content">{children}</div>
-        <Footer />
-      </div>
-    </>
+      <CustomNav notification={notification} openNotificationModal={openNotificationModal} />
+      <div className="content">{children}</div>
+      <Footer />
+    </div>
   );
 }
