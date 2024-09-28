@@ -34,7 +34,7 @@ axiosInstance.interceptors.response.use(
       const refreshToken = AuthService.getRefreshToken();
       if (refreshToken && refreshToken.length > 0) {
         try {
-          const url = process.env.REACT_APP_API_URL + 'token';
+          const url = process.env.REACT_APP_API_URL + '/token';
           const response = await axios.get(url, {
             headers: {
               Authorization: refreshToken,
