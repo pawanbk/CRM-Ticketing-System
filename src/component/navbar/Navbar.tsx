@@ -45,12 +45,13 @@ export default function CustomNavbar(props) {
       }
       <div className="d-flex gap-4 align-items-center">
         <Nav onClick={() => props.openNotificationModal()}>
-          <BellFill style={{ fontSize: '35px', color: '#111a45' }} />
+          <BellFill style={{ fontSize: '20px', color: '#111a45' }} />
         </Nav>
         <Nav.Link>
           <PersonCircle style={{ fontSize: '20px', color: '#111a45' }} />
         </Nav.Link>
+        <button onClick={logout}>Logout</button>
       </div >
-    </Navbar >
+    </Navbar>
   );
 }

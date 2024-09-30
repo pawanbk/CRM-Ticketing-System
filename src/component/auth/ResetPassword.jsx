@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -6,20 +6,30 @@ import Card from "react-bootstrap/Card";
 import { ArrowLeftCircleFill, InfoCircleFill } from "react-bootstrap-icons";
 import { CustomToaster, Notify } from "../../shared/CustomToaster.tsx";
 import CustomAlert from "../../shared/CustomAlert.tsx";
-import axios from "axios";
 import AuthLayout from "../../layout/AuthLayout.js";
 import LoadingAnimation from "../../shared/LoadingAnimation.tsx";
+import AuthService from "../../api/AuthService.js";
+import { OverlayTrigger } from "react-bootstrap";
 
 export default function Reset() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { state} = useLocation();
+  const { state } = useLocation();
   const [inputs, setInputs] = useState({
     email: "",
     pin: "",
     password: "",
     confirmPassword: "",
   });
+
+  const clearInputs = () => {
+    setInputs({
+      email: "",
+      pin: "",
+      password: "",
+      confirmPassword: "",
+    });
+  }
 
   const handleChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -28,25 +38,26 @@ export default function Reset() {
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
-    await axios
-    .patch("http://localhost:3001/v1/user/reset-password", inputs)
-    .then((result) => {
-      setIsLoading(false);
+    try {
+      const result = await AuthService.resetPassword(inputs)
       if (result.status === 200) {
         navigate("/", { state: { message: result.data.message } });
       }
-    })
-    .catch((error) => {
-      setIsLoading(false);
-      if (error.response.status === 400) {
-        console.log(error.response);
-        Notify(error.response.data.message, "error");
+    } catch (error) {
+      if (error?.status === 400) {
+        Notify(error?.data?.message, "error");
+      } else {
+        Notify("An unexpected error occurred. Please try again.", "error");
       }
-    });
+    } finally {
+      setIsLoading(false)
+      clearInputs();
+    }
   };
 
   useEffect(() => {
-    if(!state)navigate(-1);
+    if (!state) navigate(-1);
+    window.history.replaceState({}, '')
   }, []);
 
   return (
@@ -66,7 +77,11 @@ export default function Reset() {
               </Form.Group>
               <Form.Group className="mb-3 form-group">
                 <Form.Label>Pin (6 - Digit Number)</Form.Label>
-                {/* <button className="btn btn-sm" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="This is 6 digit number sent to your registered email"><InfoCircleFill /></button> */}
+                {/* <OverlayTrigger
+                  placement="right"
+                  // eslint-disable-next-line react/jsx-no-undef
+                  overlay={<Tooltip>This is 6 digit number sent to your registered email</Tooltip>}
+                ></OverlayTrigger> */}
                 <Form.Control required type="text" name="pin" value={inputs.pin} onChange={handleChange} />
               </Form.Group>
               <Form.Group className="mb-3 form-group">
