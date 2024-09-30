@@ -27,7 +27,7 @@ const CommentItem = ({ comment, fetchTicket, eventEditClicked }) => {
             setReplyInput('')
             setIsReplying(false)
             fetchTicket();
-            socket.emit("reply-created", { type: 'reply', message: `${user.username} replied to your comment.`, user: user?._id || "", ticketId: id, replyTo: comment?.author?._id, link: `/tickets/edit/${id}` });
+            socket.emit("sendNotification", { type: 'reply', message: `${user.username} replied to your comment.`, user: user?._id || "", ticketId: id, replyTo: comment?.author?._id, link: `/tickets/edit/${id}` });
         }
     }
     return (

@@ -6,8 +6,11 @@
 .dashboard-content{
     display:grid;
     max-width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(450px, auto));
+    grid-auto-rows: minmax(150px, auto);
     gap:0.5rem 1rem;
+    justify-content: center;
+    align-content: center;
 }
 .card-body a{
     text-decoration: none;
