@@ -23,7 +23,7 @@ export default function Login({ setActiveForm }) {
 
   const { setUser } = useAuthStore();
 
-  const {state} = useLocation()
+  const { state } = useLocation()
 
   const handleChange = (e) => {
     if (e.target.name === "password") {
@@ -52,6 +52,7 @@ export default function Login({ setActiveForm }) {
   const togglePass = () => {
     showPassword ? setShowPassword(false) : setShowPassword(true);
   };
+
   return (
     <Form onSubmit={onSubmit}>
       {state?.message && <CustomAlert variant="success" message={state.message} />}
@@ -69,7 +70,7 @@ export default function Login({ setActiveForm }) {
       </Form.Group>
       <Form.Check label="Remember me" />
       <Button className="form-control mt-3 button" type="submit" disabled={isLoading}>
-        {isLoading ? <LoadingAnimation />: "Login"}     
+        {isLoading ? <LoadingAnimation /> : "Login"}
       </Button>
       <div className="mt-3 d-flex flex-column align-items-end" style={{ width: "100%" }}>
         <Button variant="link" onClick={() => setActiveForm("register")}>

@@ -29,6 +29,17 @@ const AuthService = {
       return Promise.reject(error);
     }
   },
+
+  resetPassword: async (payloads) => {
+    if (!payloads.email || !payloads.pin || !payloads.password) throw new Error("All fields are mandatory");
+    try {
+      const res = await axios.patch(API_URL + "reset-password", payloads);
+      return res;
+    } catch (error) {
+      throw error?.response || new Error("Something went wrong");
+    }
+  },
+
   getAccessToken: () => sessionStorage.getItem("accessToken"),
   getRefreshToken: () => localStorage.getItem("refreshToken"),
 };
