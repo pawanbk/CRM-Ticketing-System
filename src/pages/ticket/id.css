@@ -29,7 +29,7 @@
 
 .comment-box{
     padding: 10px 20px;
-    position:fixed;
+    position:absolute;
     bottom:0;
     width:300px;
     right:0;
