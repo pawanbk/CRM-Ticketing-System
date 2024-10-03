@@ -224,10 +224,11 @@ export default function TicketDetail() {
                 <CommentItem comment={comment} fetchTicket={fetchTicket} eventEditClicked={editCommentClicked} />
               </div>
             )}
+          <div className="comment-box">
+            <CommentInput commentInput={commentInput} change={(e) => setCommentInput(e.target.value)} addComment={addComment} />
+          </div>
         </div>
-        <div className="comment-box">
-          <CommentInput commentInput={commentInput} change={(e) => setCommentInput(e.target.value)} addComment={addComment} />
-        </div>
+
       </div>
       <CustomToaster />
       <EditComment setShow={setShowEditCommentModal} show={showEditCommentModal} comment={commentInfo} fetchTicket={fetchTicket} />
