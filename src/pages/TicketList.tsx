@@ -5,13 +5,14 @@ import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { LinkContainer } from "react-router-bootstrap";
 import TicketItem from "../component/TicketItem";
 import "./TicketList.css";
-import { Button } from "react-bootstrap";
+import DataTable from 'react-data-table-component';
+import moment from "moment";
 import AddTicket from "../component/AddTicket";
 import TicketService from "../api/TicketServices";
-import { PlusCircle } from "react-bootstrap-icons";
 import { CustomToaster, Notify } from "../shared/CustomToaster.tsx";
 import { FormSelect, Form } from "react-bootstrap";
 import { ITicket } from "../shared/interface";
+import { Link } from "react-router-dom";
 
 export default function TicketList() {
   const [modalShow, setModalShow] = useState(false);
@@ -21,7 +22,28 @@ export default function TicketList() {
     title: "",
   });
 
-  const columns = ["Title", "Status", "Description", "Created At"];
+  const columns = [
+    {
+      name: 'Title',
+      selector: row => row.title,
+      sortable: true,
+      cell: (row) => <Link to={"edit/" + row._id}>{row.title}</Link>
+    },
+    {
+      name: 'Status',
+      selector: row => row.status,
+    },
+    {
+      name: 'Description',
+      selector: row => row.description,
+      sortable: true,
+    },
+    {
+      name: 'Created ',
+      selector: row => moment(row.createdAt).format('DD.MM.YYYY'),
+      sortable: true,
+    },
+  ];
 
   const fetchTickets = async () => {
     try {
@@ -55,28 +77,21 @@ export default function TicketList() {
       </Breadcrumb>
       <div className="topbar">
         <Form.Control placeholder="Search.." onChange={addFilters} name="title" value={selectedFilter?.title} className="search-bar" />
-        <button className="customBtn" onClick={() => setModalShow(true)}>New</button>
-        <FormSelect style={{ width: "30%" }} name="status" value={selectedFilter.status} onChange={addFilters}>
-          <option value="all">All</option>
-          <option value="unassigned">Unassigned</option>
-          <option value="awaiting-feedback">Awaiting Feedback</option>
-          <option value="complete">Complete</option>
+        <FormSelect name="status" value={selectedFilter.status} onChange={addFilters} className="status-filter">
+          <optgroup>
+            <option value="all">All</option>
+            <option value="unassigned">Unassigned</option>
+            <option value="awaiting-feedback">Awaiting Feedback</option>
+            <option value="complete">Complete</option>
+          </optgroup>
         </FormSelect>
+        <button className="customBtn" onClick={() => setModalShow(true)}>New</button>
       </div>
-      <table className="table table-bordered" style={{ overflowX: 'auto' }}>
-        <thead>
-          <tr>
-            {columns.map((col, index) => (
-              <th key={index}>{col}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {tickets?.map((ticket) => (
-            <TicketItem key={ticket._id} ticket={ticket} loadTickets={() => fetchTickets()} toaster={notification} />
-          ))}
-        </tbody>
-      </table>
+      <DataTable
+        columns={columns}
+        data={tickets}
+      />
+
       <AddTicket show={modalShow} onHide={() => setModalShow(false)} loadTickets={() => fetchTickets()} toaster={notification} />
       <CustomToaster />
     </AppLayout >

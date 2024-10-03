@@ -1,8 +1,9 @@
 .app-layout {
-    display:grid;
+    display: grid;
     grid-template-columns: repeat(12, 1fr);
-    gap:10px;
-    height:100%;
+    grid-template-rows: auto;
+    gap: 10px;
+    height: 100vh;
 }
 
  .top-nav{
@@ -11,6 +12,7 @@
     background: #fff;
     font-size: 17px;
     z-index: 999;
+    height: 40px;
 }
 
 .sidebar{
@@ -18,20 +20,21 @@
     grid-row: 2 / 5;
     text-align: center;
     background-color: var(--primary);
-    height: 90vh;
+    height: calc(100vh - 50px);
 }
 
-.content{
+.content {
+    margin-right: 1rem;
     grid-column: 2 / 13;
     grid-row: 2 / 4;
-    height: 80vh;
+    height: calc(100vh - 150px);
 }
 
 footer{
     grid-column: 2 / 13;
     grid-row: 4 / 5;
     border-radius: 5px;
-    height: 40px;
+    /* height: 40px; */
     background: #fff;
     font-size: 15px;
     display: flex;
@@ -47,5 +50,8 @@ footer{
       position: relative;
       display: none;
     }
-    .content, footer, .top-nav{margin-left: 0;}
+    .content, footer, .top-nav {
+        margin: 0 .5rem;
+        grid-column: 1/13;
+    }
   }
