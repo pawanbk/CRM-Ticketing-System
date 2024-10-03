@@ -19,13 +19,16 @@ body{
     background:#edeef7 !important;
 }
 
+input::placeholder, optgroup {
+    font-size: 15px;
+}
 
 .text-color-primary{
     color: var(--primary) !important;
 }
 
-td > a{
-    text-decoration: none;
+a {
+    text-decoration: none !important;
 }
 
 .wrapper{
@@ -94,6 +97,7 @@ tr.unassigned > td{
     min-width: 35px;
     height: 35px;
 }
+
 .float-right{
     float: right !important;
 }
