@@ -1,0 +1,144 @@
+.success-checkmark {
+    width: 40px;
+    height: 57.5px; /* Adjusted proportionally */
+    margin: 0 auto;
+}
+
+.check-icon {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    border-radius: 50%;
+    box-sizing: content-box;
+    border: 2px solid #4CAF50; /* Adjusted border thickness */
+}
+
+.check-icon::before {
+    top: 1.5px;  /* Adjusted position */
+    left: -1px;  /* Adjusted position */
+    width: 15px; /* Adjusted size */
+    transform-origin: 100% 50%;
+    border-radius: 50px 0 0 50px; /* Adjusted corner radius */
+    content: '';
+    height: 50px; /* Adjusted height */
+    position: absolute;
+    background: #FFFFFF;
+    transform: rotate(-45deg);
+}
+
+.check-icon::after {
+    top: 0;
+    left: 15px; /* Adjusted position */
+    width: 30px; /* Adjusted width */
+    transform-origin: 0 50%;
+    border-radius: 0 50px 50px 0; /* Adjusted corner radius */
+    animation: rotate-circle 4.25s ease-in;
+    content: '';
+    height: 50px; /* Adjusted height */
+    position: absolute;
+    background: #FFFFFF;
+    transform: rotate(-45deg);
+}
+
+.check-icon .icon-line {
+    height: 2.5px; /* Adjusted thickness */
+    background-color: #4CAF50;
+    display: block;
+    border-radius: 2px;
+    position: absolute;
+    z-index: 10;
+}
+
+.check-icon .icon-line.line-tip {
+    top: 23px; /* Adjusted position */
+    left: 7px; /* Adjusted position */
+    width: 12.5px; /* Adjusted width */
+    transform: rotate(45deg);
+    animation: icon-line-tip 0.75s;
+}
+
+.check-icon .icon-line.line-long {
+    top: 19px; /* Adjusted position */
+    right: 4px; /* Adjusted position */
+    width: 23.5px; /* Adjusted width */
+    transform: rotate(-45deg);
+    animation: icon-line-long 0.75s;
+}
+
+.check-icon .icon-circle {
+    top: -2px;
+    left: -2px;
+    z-index: 10;
+    width: 40px; /* Adjusted size */
+    height: 40px; /* Adjusted size */
+    border-radius: 50%;
+    position: absolute;
+    box-sizing: content-box;
+    border: 2px solid rgba(76, 175, 80, .5); /* Adjusted border thickness */
+}
+
+@keyframes rotate-circle {
+    0% {
+        transform: rotate(-45deg);
+    }
+    5% {
+        transform: rotate(-45deg);
+    }
+    12% {
+        transform: rotate(-405deg);
+    }
+    100% {
+        transform: rotate(-405deg);
+    }
+}
+
+@keyframes icon-line-tip {
+    0% {
+        width: 0;
+        left: 0.5px;
+        top: 9.5px; /* Adjusted starting position */
+    }
+    54% {
+        width: 0;
+        left: 0.5px;
+        top: 9.5px;
+    }
+    70% {
+        width: 25px; /* Adjusted length */
+        left: -4px; /* Adjusted position */
+        top: 18.5px; /* Adjusted position */
+    }
+    84% {
+        width: 8.5px; /* Adjusted length */
+        left: 10.5px; /* Adjusted position */
+        top: 24px; /* Adjusted position */
+    }
+    100% {
+        width: 12.5px; /* Adjusted final width */
+        left: 7px; /* Adjusted position */
+        top: 22.5px; /* Adjusted position */
+    }
+}
+
+@keyframes icon-line-long {
+    0% {
+        width: 0;
+        right: 23px; /* Adjusted starting position */
+        top: 27px; /* Adjusted starting position */
+    }
+    65% {
+        width: 0;
+        right: 23px;
+        top: 27px;
+    }
+    84% {
+        width: 27.5px; /* Adjusted length */
+        right: 0px;
+        top: 17.5px; /* Adjusted position */
+    }
+    100% {
+        width: 23.5px; /* Adjusted final width */
+        right: 4px;
+        top: 19px; /* Adjusted final position */
+    }
+}
