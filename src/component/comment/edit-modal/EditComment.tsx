@@ -7,6 +7,7 @@ import './style.css'
 import { useState } from "react";
 import { capitalize } from "lodash";
 import moment from "moment";
+import SuccessAnimation from "../../success/SuccessAnimation";
 
 const EditComment = ({ show, setShow, comment, fetchTicket }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -46,11 +47,7 @@ const EditComment = ({ show, setShow, comment, fetchTicket }) => {
                 <div className="background">
                     <div className="custom-modal">
                         {
-                            success &&
-                            <div className="success-div">
-                                <CheckCircle style={{ fontSize: '40px', color: 'green' }}></CheckCircle>
-                                Success
-                            </div>
+                            success && <SuccessAnimation></SuccessAnimation>
                         }
                         <span className="btn-close" onClick={() => setShow(false)}></span>
                         <div className="d-flex gap-3 mb-2">
