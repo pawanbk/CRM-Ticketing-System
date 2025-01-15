@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { FilePond, registerPlugin } from 'react-filepond'
 import "filepond/dist/filepond.min.css";
 import FileService from '../../api/FileService';
+import TicketService from '../../api/TicketServices';
 
 const Upload = (props) => {
     const [file, setFile] = useState();
-    const { attachments } = props
     const API_URL = process.env.REACT_APP_API_URL + "/file/upload";
+
+    const [attachments, setAttachments] = useState(props.attachments || [])
 
 
     const downloadFile = async (id) => {
@@ -14,9 +16,13 @@ const Upload = (props) => {
         await FileService.download(id)
     }
 
-    useEffect(() => {
-
-    },[file])
+   const fetchAttachments = async() => {
+        const results = await TicketService.getAttachments(props.ticket)
+        if(results && results.attachments) {
+            setAttachments([...results.attachments]);
+        }
+   }
+   
     return (
         <div>
             <FilePond
@@ -34,11 +40,21 @@ const Upload = (props) => {
                         }
                     }
                 }}
+                onprocessfile = {(error, file) => {
+                    if(!error) {
+                        fetchAttachments()
+                    }
+                }}
                 name="file"
                 labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
             />
             {attachments && attachments.map((attachment) =>
-                <li>{attachment?.name}<span style={{ marginLeft: '10px', color: 'var(--link)' }} onClick={() => downloadFile(attachment?._id)}>Download</span></li>
+                <li key={attachment?._id || attachment?.name}>
+                    {attachment?.name}
+                    <span style={{ marginLeft: '10px', color: 'var(--link)' }} onClick={() => downloadFile(attachment?._id)}>
+                        Download
+                    </span>
+                </li>
             )}
         </div>
     )
