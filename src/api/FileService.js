@@ -42,6 +42,16 @@ const FileService = {
     if(!file || !ticketId) throw new Error('No file or ticket provided')
 
     const res = axios.post(API_URL + `upload`)
+  },
+
+  delete: async (id) => {
+    if(!id) throw new Error('No Id provided')
+    try{
+      const res = await axios.delete(API_URL + `delete/${id}`)
+      return res.data;
+    } catch(error) {
+      throw new Error(error.message)
+    }
   }
 };
 
