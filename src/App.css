@@ -16,7 +16,7 @@ html, body{
 }
 body{
     font-size:15px;
-    background:#edeef7 !important;
+    background-color:#edeef7 !important;
 }
 
 input::placeholder, optgroup {

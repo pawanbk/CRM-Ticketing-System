@@ -14,12 +14,12 @@ import { useAuthStore } from "../../store.tsx";
 import io from "socket.io-client";
 import UserService from "../../api/UserService.js";
 import EditComment from "../../component/comment/edit-modal/EditComment.tsx";
-
+import Upload from "./upload.jsx";
 
 const socket = io("http://localhost:3001");
 
-
 export default function TicketDetail() {
+  const [activeTab, setActiveTab] = useState("information");
   const { id } = useParams();
   const navigate = useNavigate();
   const [ticket, setTicket] = useState({
@@ -28,7 +28,8 @@ export default function TicketDetail() {
     status: "",
     author: "",
     description: "",
-    comments: []
+    files: [],
+    comments: [],
   });
 
   const { user } = useAuthStore();
@@ -43,27 +44,24 @@ export default function TicketDetail() {
   const editCommentClicked = (comment) => {
     setShowEditCommentModal(true);
     setCommentInfo(comment);
-  }
+  };
 
   const addComment = async () => {
     try {
       const res = await TicketService.comment(id, commentInput);
       if (res.data?.success === true) {
         fetchTicket();
-        socket.emit("sendNotification",
-          {
-            type: 'comment',
-            message: `${user?.username} commented on your ticket.`,
-            from: user?._id || "",
-            to: ticket.author,
-            link: `/tickets/edit/${id}`
-          });
+        socket.emit("sendNotification", {
+          type: "comment",
+          message: `${user?.username} commented on your ticket.`,
+          from: user?._id || "",
+          to: ticket.author,
+          link: `/tickets/edit/${id}`,
+        });
       }
-    } catch (error) {
-
-    }
-    setCommentInput('')
-  }
+    } catch (error) { }
+    setCommentInput("");
+  };
 
   const fetchTicket = async () => {
     try {
@@ -74,7 +72,7 @@ export default function TicketDetail() {
       }
     } catch (error) {
       if (error.response && (error.response.status === 404 || error.response.status === 400)) {
-        navigate("/404")
+        navigate("/404");
       }
     }
   };
@@ -96,24 +94,26 @@ export default function TicketDetail() {
 
   const addAssignees = async (e) => {
     if (selectedAssignees.includes(e.target.value)) {
-      return
+      return;
     }
-    setSelectedAssignees([...selectedAssignees, e.target.value])
-
-  }
+    setSelectedAssignees([...selectedAssignees, e.target.value]);
+  };
 
   const fetchAssignees = () => {
-    UserService.assignees().then(async (res) => {
-      if (res.data?.success === true) {
-        setAssignees(await res.data.assignees.map((assignee) => {
-          return { _id: assignee._id, fullName: assignee.firstName + " " + assignee.lastName }
-        }));
-      }
-    }).catch((error) => {
-      console.log(error)
-    })
-  }
-
+    UserService.assignees()
+      .then(async (res) => {
+        if (res.data?.success === true) {
+          setAssignees(
+            await res.data.assignees.map((assignee) => {
+              return { _id: assignee._id, fullName: assignee.firstName + " " + assignee.lastName };
+            })
+          );
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
     fetchTicket();
@@ -121,7 +121,7 @@ export default function TicketDetail() {
   }, []);
   return (
     <AppLayout>
-      <Breadcrumb>
+      <Breadcrumb className="d-flex justify-center">
         <LinkContainer to="/dashboard">
           <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
         </LinkContainer>
@@ -132,106 +132,103 @@ export default function TicketDetail() {
       </Breadcrumb>
       <div className="d-flex flex-row">
         <div className="edit-form border rounded">
-          <Form onSubmit={updateTicket}>
-            <div className="row">
-              <div className="col-lg-6 col-sm-12">
-                <Form.Group className="mb-3 form-group">
-                  <Form.Label>Title</Form.Label>
-                  <Form.Control
-                    required
-                    type="text"
-                    name="title"
-                    value={ticket.title}
-                    onChange={handleChange}
-                    disabled={ticket.author !== user._id} />
-                </Form.Group>
-              </div>
+          <div className="tabs">
+            <ul className="border-bottom">
+              <li className={ activeTab === 'information' ? 'active': '' } onClick={() => setActiveTab("information")}>Information</li>
+              <li className={ activeTab === 'upload' ? 'active': '' } onClick={() => setActiveTab("upload")}>Files</li>
+            </ul>
+          </div>
+          {activeTab === "information" && (
+            <Form onSubmit={updateTicket}>
+              <div className="row">
+                <div className="col-lg-6 col-sm-12">
+                  <Form.Group className="mb-3 form-group">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control required type="text" name="title" value={ticket.title} onChange={handleChange} disabled={ticket.author !== user._id} />
+                  </Form.Group>
+                </div>
 
-              <div className="col-lg-6 col-sm-12">
-                <Form.Group className="mb-3 form-group">
-                  <Form.Label>Status</Form.Label>
-                  <Form.Select required type="select" name="status" onChange={handleChange} disabled={ticket.author !== user._id} value={ticket.status}>
-                    <option>Select One</option>
-                    <option value="unassigned">
-                      Unassigned
-                    </option>
-                    <option value="awaiting-feedback">
-                      Awaiting Feedback
-                    </option>
-                    <option value="complete">
-                      Complete
-                    </option>
-                  </Form.Select>
-                </Form.Group>
+                <div className="col-lg-6 col-sm-12">
+                  <Form.Group className="mb-3 form-group">
+                    <Form.Label>Status</Form.Label>
+                    <Form.Select required type="select" name="status" onChange={handleChange} disabled={ticket.author !== user._id} value={ticket.status}>
+                      <option>Select One</option>
+                      <option value="unassigned">Unassigned</option>
+                      <option value="awaiting-feedback">Awaiting Feedback</option>
+                      <option value="complete">Complete</option>
+                    </Form.Select>
+                  </Form.Group>
+                </div>
               </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-6 col-sm-12">
-                <Form.Group className="mb-3 form-group">
-                  <Form.Label>Assignee Picker</Form.Label>
-                  <Form.Select className="picker" type="select" name="assignees" onChange={addAssignees} disabled={ticket.author !== user._id} value="">
-                    <option value="">Select</option>
-                    {assignees?.map((assignee) =>
-                      <option key={assignee?._id} value={assignee?._id} >
-                        {assignee?.fullName}
-                      </option>
-                    )}
-                  </Form.Select>
-                </Form.Group>
+              <div className="row">
+                <div className="col-lg-6 col-sm-12">
+                  <Form.Group className="mb-3 form-group">
+                    <Form.Label>Assignee Picker</Form.Label>
+                    <Form.Select className="picker" type="select" name="assignees" onChange={addAssignees} disabled={ticket.author !== user._id} value="">
+                      <option value="">Select</option>
+                      {assignees?.map((assignee) => (
+                        <option key={assignee?._id} value={assignee?._id}>
+                          {assignee?.fullName}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>
+                </div>
+                <div className="col-lg-6 col-sm-12">
+                  <Form.Group className="mb-3 form-group">
+                    <Form.Label>Selected Assignees</Form.Label>
+                    <div className={`border rounded assignee-holder ${ticket.author !== user._id ? "disabled" : ""}`}>
+                      {selectedAssignees.length ? (
+                        selectedAssignees.map((assignee, index) => (
+                          <div key={index} className="badge bg-primary me-1">
+                            {assignees.find((item) => item._id === assignee)?.fullName}
+                            <span className="btn-cancel" onClick={() => setSelectedAssignees(selectedAssignees.filter((item) => item !== assignee))}>
+                              &times;
+                            </span>
+                          </div>
+                        ))
+                      ) : (
+                        <span>None</span>
+                      )}
+                    </div>
+                  </Form.Group>
+                </div>
               </div>
-              <div className="col-lg-6 col-sm-12">
-                <Form.Group className="mb-3 form-group">
-                  <Form.Label>Selected Assignees</Form.Label>
-                  <div className={`border rounded assignee-holder ${ticket.author !== user._id ? 'disabled' : ''}`}>
-                    {selectedAssignees.length ? selectedAssignees.map((assignee, index) =>
-                      <div key={index} className="badge bg-primary me-1">
-                        {assignees.find((item) => item._id === assignee)?.fullName}
-                        <span
-                          className="btn-cancel"
-                          onClick={() => setSelectedAssignees(selectedAssignees.filter((item) => item !== assignee))}
-                        >
-                          &times;
-                        </span>
-                      </div>
-                    ) : <span>None</span>}
-                  </div>
-                </Form.Group>
-              </div>
-            </div>
-            <Form.Group className="mb-3 form-group boxsizingBorder">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                as="textarea"
-                placeholder="Leave a comment here"
-                name="description"
-                value={ticket.description}
-                style={{ height: "100px" }}
-                onChange={handleChange}
-                disabled={ticket.author !== user._id}
-              />
-            </Form.Group>
-            {
-              (ticket.author === user._id) ? <Button className="form-control mt-3 button" type="submit">
-                Update </Button> : <Button className="form-control mt-3 button" type="submit" disabled>Update</Button>
-            }
-          </Form>
+              <Form.Group className="mb-3 form-group boxsizingBorder">
+                <Form.Label>Description</Form.Label>
+                <Form.Control as="textarea" placeholder="Leave a comment here" name="description" value={ticket.description} style={{ height: "100px" }} onChange={handleChange} disabled={ticket.author !== user._id} />
+              </Form.Group>
+              {ticket.author === user._id ? (
+                <Button className="form-control mt-3 button" type="submit">
+                  Update{" "}
+                </Button>
+              ) : (
+                <Button className="form-control mt-3 button" type="submit" disabled>
+                  Update
+                </Button>
+              )}
+            </Form>
+          )}
+
+          {activeTab === "upload" && <Upload attachments={ticket?.files} ticket={ticket?._id}></Upload>}
         </div>
         <div className="comment-section d-flex flex-column gap-2 border-start border-top rounded">
           <h5>All Comments</h5>
-          {ticket.comments?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-            .filter((comment) => !comment.parentId).map((comment) =>
+          {ticket.comments
+            ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .filter((comment) => !comment.parentId)
+            .map((comment) => (
               <div key={comment._id} className="rounded comment-item">
                 <CommentItem comment={comment} fetchTicket={fetchTicket} eventEditClicked={editCommentClicked} />
               </div>
-            )}
+            ))}
           <div className="comment-box">
             <CommentInput commentInput={commentInput} change={(e) => setCommentInput(e.target.value)} addComment={addComment} />
           </div>
         </div>
-
       </div>
       <CustomToaster />
       <EditComment setShow={setShowEditCommentModal} show={showEditCommentModal} comment={commentInfo} fetchTicket={fetchTicket} />
-    </AppLayout >
+    </AppLayout>
   );
 }

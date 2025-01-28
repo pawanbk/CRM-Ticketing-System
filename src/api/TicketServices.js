@@ -70,6 +70,18 @@ const TicketService = {
       return Promise.reject(error);
     }
   },
+
+  getAttachments: async (ticketId) => {
+    if(!ticketId) throw new Error('No ticket id provided')
+    try{
+      const res = await axiosInstance.post('/ticket/attachments', {ticketId});
+      if(res.status === 200 && res.data?.success) {
+        return res.data;
+      }
+    } catch(error) {
+      return error;
+    }
+  }
 };
 
 export default TicketService;

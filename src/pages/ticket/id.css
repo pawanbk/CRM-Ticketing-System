@@ -1,9 +1,8 @@
-.edit-form{
-    display: flex;
-    justify-content: center;
+
+.edit-form {
     width: calc(100vw - 470px);
     margin-left: 20px;
-    margin-right:310px;
+    margin-right: 310px;
     padding: 10px 30px;
 }
 
@@ -66,7 +65,7 @@
     position:relative !important;
     min-width:80px;
 }
-.badge .btn-cancel{
+.badge .btn-cancel {
     position: absolute;
     top: -10px;
     right:0;
@@ -79,10 +78,38 @@
     cursor: pointer;
 }
 
-.edit-form form{
-    width:90%;
+.edit-form form {
+    margin: 0 auto;
+    width: 90%;
 }
 
+.tabs {
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 2rem !important;
+}
+
+.tabs ul {
+    display: flex;
+    gap: 30px;
+    padding: 0;
+    border-bottom: 1px solid var(--primary);
+
+}
+
+.tabs ul li {
+    width: 150px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.tabs ul li:hover {
+   cursor: pointer;
+}
+
+.tabs ul li.active {
+    color: var(--link)
+}
 
 @media only screen and (max-width:600px ){
     .edit-form{
